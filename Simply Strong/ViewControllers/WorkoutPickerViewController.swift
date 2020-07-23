@@ -71,8 +71,7 @@ class WorkoutPickerViewController: UIViewController, UIPickerViewDataSource, UIP
         
         if exercises.count > 0 {
             let exercise = exercises[row]
-            guard let exerciseName = exercise.value(forKey: "name") as? String else { return }
-            mainVC?.selectWorkoutName(workoutIndex: row, workoutName: exerciseName)
+            mainVC?.selectWorkoutName(exercise :exercise)
         }
 
         

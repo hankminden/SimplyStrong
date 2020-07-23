@@ -22,8 +22,9 @@ class AddSetViewController: UIViewController, UITableViewDataSource, UITableView
     
     
     var repsCountValue: Int = 0
-    var selectedWorkoutIndex = 0
-    var selectedRepName: String = "Pull Ups"
+    //var selectedWorkoutIndex = 0
+    //var selectedRepName: String?
+    var selectedExercise : NSManagedObject?
     
     var exercises : [NSManagedObject] = []
     var workoutSets: [NSManagedObject] = []
@@ -65,15 +66,17 @@ class AddSetViewController: UIViewController, UITableViewDataSource, UITableView
         tableView.delegate = self
         tableView.dataSource = self
         
-        var workoutName : String
+       
         if(exercises.count > 0){
-            let exercise = exercises[selectedWorkoutIndex]
-            workoutName = exercise.value(forKey: "name") as! String
+            let exercise = exercises[0]
+           
+            selectedExercise = exercise
+            selectWorkoutName(exercise: exercise)
         } else {
-            workoutName = ""
+            pickWorkoutButton.setTitle("", for: UIControl.State.normal)
         }
         
-        selectWorkoutName(workoutIndex: selectedWorkoutIndex, workoutName: workoutName)
+        
         
         
         
@@ -155,15 +158,27 @@ class AddSetViewController: UIViewController, UITableViewDataSource, UITableView
         }
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        let selectedSet = workoutSets[indexPath.row]
+        let exercise = selectedSet.value(forKeyPath: "ofExercise") as! NSManagedObject
+        let exerciseName = exercise.value(forKey: "name") as! String
+       
+        repCache[exerciseName] = selectedSet.value(forKey: "noReps") as! Int
+        selectWorkoutName(exercise: exercise)
+     
+        
+    }
+    
     //===== end table view delegate methods 
     
-    func selectWorkoutName( workoutIndex: Int, workoutName: String) -> Void {
+    func selectWorkoutName( exercise: NSManagedObject) -> Void {
         
      
         
-        selectedWorkoutIndex = workoutIndex
-        selectedRepName = workoutName
-        pickWorkoutButton.setTitle(workoutName, for: UIControl.State.normal)
+        selectedExercise = exercise
+        let selectedRepName = selectedExercise?.value(forKey: "name") as! String
+        pickWorkoutButton.setTitle(selectedRepName, for: UIControl.State.normal)
         
         if repCache[selectedRepName] != nil {
             
@@ -176,37 +191,40 @@ class AddSetViewController: UIViewController, UITableViewDataSource, UITableView
     
     @IBAction func addSetTouched(_ sender: Any) {
         
-        let today = Date()
-        
-        // save to core data
-        
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-            return
-        }
-        
-        let managedContext = appDelegate.persistentContainer.viewContext
-        let entity = NSEntityDescription.entity(forEntityName: "Sets", in: managedContext)!
-        let set = NSManagedObject(entity: entity, insertInto: managedContext)
-        
-        set.setValue(repsCountValue, forKeyPath: "noReps")
-        set.setValue(today, forKeyPath: "created")
-      
-        
-        if(exercises.count > 0){
-            let exercise = exercises[selectedWorkoutIndex]
-            set.setValue(exercise, forKeyPath: "ofExercise")
-        }
-        
-        do {
-            try managedContext.save()
+        if selectedExercise != nil {
             
-            // update table
-            workoutSets.append(set)
-            tableView.reloadData()
-            scrollToBottom()
-        } catch let error as NSError {
-            print("Could not save. \(error), \(error.userInfo)")
+            let today = Date()
+              
+              // save to core data
+              
+              guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+                  return
+              }
+              
+              let managedContext = appDelegate.persistentContainer.viewContext
+              let entity = NSEntityDescription.entity(forEntityName: "Sets", in: managedContext)!
+              let set = NSManagedObject(entity: entity, insertInto: managedContext)
+              
+              set.setValue(repsCountValue, forKeyPath: "noReps")
+              set.setValue(today, forKeyPath: "created")
+              set.setValue(selectedExercise, forKeyPath: "ofExercise")
+              
+             
+              
+              do {
+                  try managedContext.save()
+                  
+                  // update table
+                  workoutSets.append(set)
+                  tableView.reloadData()
+                  scrollToBottom()
+              } catch let error as NSError {
+                  print("Could not save. \(error), \(error.userInfo)")
+              }
+            
         }
+        
+        
         
         
         
@@ -218,7 +236,7 @@ class AddSetViewController: UIViewController, UITableViewDataSource, UITableView
         
         repsCountValue += 1
         repsDisplayLabel.text = String(format: "%d",repsCountValue)
-        
+        let selectedRepName = selectedExercise?.value(forKey: "name") as! String
         repCache[selectedRepName] = repsCountValue
         
     }
@@ -228,6 +246,7 @@ class AddSetViewController: UIViewController, UITableViewDataSource, UITableView
         if(repsCountValue > 0){
             repsCountValue -= 1
             repsDisplayLabel.text = String(format: "%d",repsCountValue)
+            let selectedRepName = selectedExercise?.value(forKey: "name") as! String
             repCache[selectedRepName] = repsCountValue
         }
         
@@ -238,7 +257,19 @@ class AddSetViewController: UIViewController, UITableViewDataSource, UITableView
         let pickerVC = storyboard.instantiateViewController(withIdentifier: "workoutPickerVC") as! WorkoutPickerViewController
         pickerVC.mainVC = self
       
-        pickerVC.selectedWorkoutIndex = selectedWorkoutIndex
+        for (index, exercise) in exercises.enumerated() {
+          
+            let selectedExerciseName = selectedExercise?.value(forKey: "name") as! String
+            let currentExerciseName = exercise.value(forKey: "name") as! String
+            
+            if selectedExerciseName == currentExerciseName {
+                
+                pickerVC.selectedWorkoutIndex = index
+                
+            }
+        }
+        
+        
         self.present(pickerVC, animated: true) {
             
         }
