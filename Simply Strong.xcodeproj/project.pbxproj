@@ -7,15 +7,21 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7F1EB53124C348C300586BB0 /* WorkoutPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F1EB53024C348C300586BB0 /* WorkoutPickerViewController.swift */; };
+		7F3E2D0B24C60FD900A389E6 /* AddExerciseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F3E2D0A24C60FD900A389E6 /* AddExerciseViewController.swift */; };
+		7F3E2D1024C7B41E00A389E6 /* ExerciseTabContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F3E2D0F24C7B41E00A389E6 /* ExerciseTabContainerViewController.swift */; };
+		7F3E2D1424C7F69400A389E6 /* LogFoodViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F3E2D1324C7F69400A389E6 /* LogFoodViewController.swift */; };
+		7F3E2D1624C7F6E400A389E6 /* LogFoodTabContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F3E2D1524C7F6E400A389E6 /* LogFoodTabContainerViewController.swift */; };
+		7F3E2D1824CA1B5B00A389E6 /* FoodsEatenTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F3E2D1724CA1B5B00A389E6 /* FoodsEatenTableViewCell.swift */; };
 		7F587E7124C082820022CDAE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F587E7024C082820022CDAE /* AppDelegate.swift */; };
-		7F587E7324C082820022CDAE /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F587E7224C082820022CDAE /* SceneDelegate.swift */; };
-		7F587E7524C082820022CDAE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F587E7424C082820022CDAE /* ViewController.swift */; };
+		7F587E7524C082820022CDAE /* AddSetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F587E7424C082820022CDAE /* AddSetViewController.swift */; };
 		7F587E7824C082820022CDAE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7F587E7624C082820022CDAE /* Main.storyboard */; };
 		7F587E7B24C082820022CDAE /* Simply_Strong.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7F587E7924C082820022CDAE /* Simply_Strong.xcdatamodeld */; };
 		7F587E7D24C082840022CDAE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7F587E7C24C082840022CDAE /* Assets.xcassets */; };
 		7F587E8024C082840022CDAE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7F587E7E24C082840022CDAE /* LaunchScreen.storyboard */; };
 		7F587E8B24C082840022CDAE /* Simply_StrongTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F587E8A24C082840022CDAE /* Simply_StrongTests.swift */; };
 		7F587E9624C082840022CDAE /* Simply_StrongUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F587E9524C082840022CDAE /* Simply_StrongUITests.swift */; };
+		7FFC67F524C3387900CF991C /* WorkoutSetsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FFC67F424C3387900CF991C /* WorkoutSetsTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,10 +42,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		7F1EB53024C348C300586BB0 /* WorkoutPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutPickerViewController.swift; sourceTree = "<group>"; };
+		7F3E2D0A24C60FD900A389E6 /* AddExerciseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddExerciseViewController.swift; sourceTree = "<group>"; };
+		7F3E2D0F24C7B41E00A389E6 /* ExerciseTabContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseTabContainerViewController.swift; sourceTree = "<group>"; };
+		7F3E2D1224C7C53000A389E6 /* Simply Strong.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Simply Strong.entitlements"; sourceTree = "<group>"; };
+		7F3E2D1324C7F69400A389E6 /* LogFoodViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogFoodViewController.swift; sourceTree = "<group>"; };
+		7F3E2D1524C7F6E400A389E6 /* LogFoodTabContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogFoodTabContainerViewController.swift; sourceTree = "<group>"; };
+		7F3E2D1724CA1B5B00A389E6 /* FoodsEatenTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodsEatenTableViewCell.swift; sourceTree = "<group>"; };
 		7F587E6D24C082820022CDAE /* Simply Strong.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Simply Strong.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7F587E7024C082820022CDAE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		7F587E7224C082820022CDAE /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		7F587E7424C082820022CDAE /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		7F587E7424C082820022CDAE /* AddSetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSetViewController.swift; sourceTree = "<group>"; };
 		7F587E7724C082820022CDAE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		7F587E7A24C082820022CDAE /* Simply_Strong.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Simply_Strong.xcdatamodel; sourceTree = "<group>"; };
 		7F587E7C24C082840022CDAE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -51,6 +63,7 @@
 		7F587E9124C082840022CDAE /* Simply StrongUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Simply StrongUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7F587E9524C082840022CDAE /* Simply_StrongUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Simply_StrongUITests.swift; sourceTree = "<group>"; };
 		7F587E9724C082840022CDAE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7FFC67F424C3387900CF991C /* WorkoutSetsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutSetsTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,6 +91,37 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7F3E2D0C24C798A700A389E6 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				7F587E7424C082820022CDAE /* AddSetViewController.swift */,
+				7F1EB53024C348C300586BB0 /* WorkoutPickerViewController.swift */,
+				7F3E2D0A24C60FD900A389E6 /* AddExerciseViewController.swift */,
+				7F3E2D1324C7F69400A389E6 /* LogFoodViewController.swift */,
+				7F3E2D0F24C7B41E00A389E6 /* ExerciseTabContainerViewController.swift */,
+				7F3E2D1524C7F6E400A389E6 /* LogFoodTabContainerViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		7F3E2D0D24C798C700A389E6 /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				7F587E7624C082820022CDAE /* Main.storyboard */,
+				7F587E7E24C082840022CDAE /* LaunchScreen.storyboard */,
+			);
+			path = Storyboards;
+			sourceTree = "<group>";
+		};
+		7F3E2D0E24C798E000A389E6 /* TableViewCells */ = {
+			isa = PBXGroup;
+			children = (
+				7FFC67F424C3387900CF991C /* WorkoutSetsTableViewCell.swift */,
+				7F3E2D1724CA1B5B00A389E6 /* FoodsEatenTableViewCell.swift */,
+			);
+			path = TableViewCells;
+			sourceTree = "<group>";
+		};
 		7F587E6424C082810022CDAE = {
 			isa = PBXGroup;
 			children = (
@@ -101,12 +145,12 @@
 		7F587E6F24C082820022CDAE /* Simply Strong */ = {
 			isa = PBXGroup;
 			children = (
+				7F3E2D1224C7C53000A389E6 /* Simply Strong.entitlements */,
+				7F3E2D0E24C798E000A389E6 /* TableViewCells */,
+				7F3E2D0D24C798C700A389E6 /* Storyboards */,
+				7F3E2D0C24C798A700A389E6 /* ViewControllers */,
 				7F587E7024C082820022CDAE /* AppDelegate.swift */,
-				7F587E7224C082820022CDAE /* SceneDelegate.swift */,
-				7F587E7424C082820022CDAE /* ViewController.swift */,
-				7F587E7624C082820022CDAE /* Main.storyboard */,
 				7F587E7C24C082840022CDAE /* Assets.xcassets */,
-				7F587E7E24C082840022CDAE /* LaunchScreen.storyboard */,
 				7F587E8124C082840022CDAE /* Info.plist */,
 				7F587E7924C082820022CDAE /* Simply_Strong.xcdatamodeld */,
 			);
@@ -262,10 +306,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7F3E2D0B24C60FD900A389E6 /* AddExerciseViewController.swift in Sources */,
 				7F587E7B24C082820022CDAE /* Simply_Strong.xcdatamodeld in Sources */,
-				7F587E7524C082820022CDAE /* ViewController.swift in Sources */,
+				7F587E7524C082820022CDAE /* AddSetViewController.swift in Sources */,
+				7F3E2D1624C7F6E400A389E6 /* LogFoodTabContainerViewController.swift in Sources */,
+				7FFC67F524C3387900CF991C /* WorkoutSetsTableViewCell.swift in Sources */,
 				7F587E7124C082820022CDAE /* AppDelegate.swift in Sources */,
-				7F587E7324C082820022CDAE /* SceneDelegate.swift in Sources */,
+				7F1EB53124C348C300586BB0 /* WorkoutPickerViewController.swift in Sources */,
+				7F3E2D1024C7B41E00A389E6 /* ExerciseTabContainerViewController.swift in Sources */,
+				7F3E2D1424C7F69400A389E6 /* LogFoodViewController.swift in Sources */,
+				7F3E2D1824CA1B5B00A389E6 /* FoodsEatenTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -438,15 +488,18 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "Simply Strong/Simply Strong.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9K4JT24X2J;
 				INFOPLIST_FILE = "Simply Strong/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.promeme.Simply-Strong";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -456,15 +509,18 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "Simply Strong/Simply Strong.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9K4JT24X2J;
 				INFOPLIST_FILE = "Simply Strong/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.promeme.Simply-Strong";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

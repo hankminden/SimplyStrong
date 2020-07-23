@@ -1,4 +1,29 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1" systemVersion="11A491" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="false" userDefinedModelVersionIdentifier="">
-    <elements/>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="16119" systemVersion="19D76" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Exercises" representedClassName="Exercises" syncable="YES" codeGenerationType="class">
+        <attribute name="created" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="setOf" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Sets" inverseName="ofExercise" inverseEntity="Sets"/>
+    </entity>
+    <entity name="Foods" representedClassName="Foods" syncable="YES" codeGenerationType="class">
+        <attribute name="calories" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="created" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="foodOfMeal" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="FoodsConsumed" inverseName="ofFood" inverseEntity="FoodsConsumed"/>
+    </entity>
+    <entity name="FoodsConsumed" representedClassName="FoodsConsumed" syncable="YES" codeGenerationType="class">
+        <attribute name="created" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <relationship name="ofFood" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Foods" inverseName="foodOfMeal" inverseEntity="Foods"/>
+    </entity>
+    <entity name="Sets" representedClassName="Sets" syncable="YES" codeGenerationType="class">
+        <attribute name="created" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="noReps" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="ofExercise" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Exercises" inverseName="setOf" inverseEntity="Exercises"/>
+    </entity>
+    <elements>
+        <element name="Exercises" positionX="-537.3515625" positionY="7.89453125" width="128" height="88"/>
+        <element name="Sets" positionX="-166.96875" positionY="125.3125" width="128" height="88"/>
+        <element name="Foods" positionX="-535.5" positionY="-240.5" width="128" height="103"/>
+        <element name="FoodsConsumed" positionX="-156.6015625" positionY="-74.5078125" width="128" height="73"/>
+    </elements>
 </model>
