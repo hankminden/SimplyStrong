@@ -262,15 +262,15 @@
                                     <constraint firstAttribute="height" constant="300" id="pOQ-yR-0Qh"/>
                                 </constraints>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="WorkoutCell" id="Uvg-Ho-VgR" customClass="WorkoutSetsTableViewCell" customModule="Simply_Strong" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="386" height="44"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="WorkoutCell" rowHeight="38" id="Uvg-Ho-VgR" customClass="WorkoutSetsTableViewCell" customModule="Simply_Strong" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="386" height="38"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Uvg-Ho-VgR" id="TkF-nM-x1G">
-                                            <rect key="frame" x="0.0" y="0.0" width="386" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="386" height="38"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="88" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="WKh-He-sIf">
-                                                    <rect key="frame" x="10" y="7" width="50" height="30"/>
+                                                    <rect key="frame" x="10" y="4" width="50" height="30"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="50" id="Ox9-6A-c3m"/>
                                                         <constraint firstAttribute="height" constant="30" id="e5Y-Sy-2wc"/>
@@ -280,7 +280,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pull Ups" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="A8l-3D-cAO">
-                                                    <rect key="frame" x="90" y="7" width="188" height="30"/>
+                                                    <rect key="frame" x="90" y="4" width="188" height="30"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="6uP-CT-GOM"/>
                                                     </constraints>
@@ -289,7 +289,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12:34:59 a" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="unp-ty-yhc">
-                                                    <rect key="frame" x="288" y="7" width="88" height="30"/>
+                                                    <rect key="frame" x="288" y="4" width="88" height="30"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="88" id="NZa-eM-63P"/>
                                                         <constraint firstAttribute="height" constant="30" id="fOI-4J-Hlm"/>
@@ -313,6 +313,46 @@
                                             <outlet property="repName" destination="A8l-3D-cAO" id="BQ4-Bp-MoP"/>
                                             <outlet property="repsCount" destination="WKh-He-sIf" id="cWF-VD-Tt5"/>
                                             <outlet property="timeDisplay" destination="unp-ty-yhc" id="Htz-BS-RX8"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="WorkoutTotalCell" rowHeight="28" id="eQf-CA-zjS" customClass="WorkoutTotalTableViewCell" customModule="Simply_Strong" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="66" width="386" height="28"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="eQf-CA-zjS" id="zl6-oW-8ez">
+                                            <rect key="frame" x="0.0" y="0.0" width="386" height="28"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="888" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="09B-JJ-3Tv">
+                                                    <rect key="frame" x="10" y="-1" width="50" height="30"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="50" id="9uQ-x4-lrv"/>
+                                                        <constraint firstAttribute="height" constant="30" id="GPK-Ow-OpQ"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="16"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Total Pull Ups" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="31p-Qw-h1y">
+                                                    <rect key="frame" x="90" y="-1" width="98.5" height="30"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="30" id="dgQ-9e-9eT"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="16"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <constraints>
+                                                <constraint firstItem="09B-JJ-3Tv" firstAttribute="centerY" secondItem="zl6-oW-8ez" secondAttribute="centerY" id="4z1-li-Jk8"/>
+                                                <constraint firstItem="09B-JJ-3Tv" firstAttribute="leading" secondItem="zl6-oW-8ez" secondAttribute="leading" constant="10" id="NVU-Pn-sRR"/>
+                                                <constraint firstItem="31p-Qw-h1y" firstAttribute="leading" secondItem="09B-JJ-3Tv" secondAttribute="trailing" constant="30" id="ZOC-lL-1jN"/>
+                                                <constraint firstItem="31p-Qw-h1y" firstAttribute="centerY" secondItem="09B-JJ-3Tv" secondAttribute="centerY" id="hY8-oT-WEU"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="totalRepCount" destination="09B-JJ-3Tv" id="AOo-F5-qDG"/>
+                                            <outlet property="totalRepName" destination="31p-Qw-h1y" id="CNt-EK-TXV"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
