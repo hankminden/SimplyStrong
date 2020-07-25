@@ -93,6 +93,46 @@
                                             <outlet property="foodName" destination="2JA-sD-yOr" id="G3Y-3R-elL"/>
                                         </connections>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CalorieTotalCell" rowHeight="28" id="WER-oY-qJ7" customClass="CalorieTotalTableViewCell" customModule="Simply_Strong" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="72" width="386" height="28"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="WER-oY-qJ7" id="Dij-un-r9Q">
+                                            <rect key="frame" x="0.0" y="0.0" width="386" height="28"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="88" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="d5T-Wa-RfI">
+                                                    <rect key="frame" x="10" y="-1" width="50" height="30"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="50" id="JEc-su-pKy"/>
+                                                        <constraint firstAttribute="height" constant="30" id="ZSa-oP-WuC"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="16"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pull Ups" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="uYZ-ez-LRK">
+                                                    <rect key="frame" x="90" y="-1" width="58.5" height="30"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="30" id="HUf-PQ-C5B"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="16"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <constraints>
+                                                <constraint firstItem="d5T-Wa-RfI" firstAttribute="leading" secondItem="Dij-un-r9Q" secondAttribute="leading" constant="10" id="HiP-f0-UkY"/>
+                                                <constraint firstItem="uYZ-ez-LRK" firstAttribute="leading" secondItem="d5T-Wa-RfI" secondAttribute="trailing" constant="30" id="K6a-NJ-GUs"/>
+                                                <constraint firstItem="uYZ-ez-LRK" firstAttribute="centerY" secondItem="Dij-un-r9Q" secondAttribute="centerY" id="iXG-MX-6f2"/>
+                                                <constraint firstItem="d5T-Wa-RfI" firstAttribute="centerY" secondItem="Dij-un-r9Q" secondAttribute="centerY" id="nsA-0I-Ons"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="totalCalories" destination="d5T-Wa-RfI" id="TKb-an-CX6"/>
+                                            <outlet property="totalCaloriesLabel" destination="uYZ-ez-LRK" id="C8A-mY-d6g"/>
+                                        </connections>
+                                    </tableViewCell>
                                 </prototypes>
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GHe-oR-Ezo">

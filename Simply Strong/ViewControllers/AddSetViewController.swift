@@ -38,7 +38,6 @@ class AddSetViewController: UIViewController, UITableViewDataSource, UITableView
     var totalDaysOfWorkouts = 0
     var organizedWorkoutSets: [WorkoutDay] = []
     
-
     let borderGray = UIColor(red: 105.0/255.0, green: 105.0/255.0, blue: 105.0/255.0, alpha: 1.0)
 
     var repCache: [String: Int] = [:]
@@ -336,9 +335,6 @@ class AddSetViewController: UIViewController, UITableViewDataSource, UITableView
             } catch let error as NSError {
                 print("Could not save. \(error), \(error.userInfo)")
             }
-            
-            
-
         }
     }
     
@@ -599,10 +595,6 @@ class AddSetViewController: UIViewController, UITableViewDataSource, UITableView
         
         totalDaysOfWorkouts = dayCounter
         
-        //self.tableView.reloadData()
-       
-      
-
         
     }
     

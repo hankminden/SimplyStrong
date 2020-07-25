@@ -9,6 +9,12 @@
 import UIKit
 import CoreData
 
+struct FoodDay {
+    var date : String
+    var foodsEaten : [NSManagedObject] = []
+    var totalDailyCalories : Int
+}
+
 class LogFoodViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource {
     
 
@@ -18,6 +24,9 @@ class LogFoodViewController: UIViewController, UIPickerViewDataSource, UIPickerV
     var calSelected : Int = 0
     var foods : [NSManagedObject] = []
     var foodsEaten : [NSManagedObject] = []
+    
+    var totalFoodDays = 0
+    var organizedFoodDays: [FoodDay] = []
     
     @IBOutlet var logFoodTable: UITableView!
     @IBOutlet var caloriePicker: UIPickerView!
@@ -56,11 +65,13 @@ class LogFoodViewController: UIViewController, UIPickerViewDataSource, UIPickerV
         let managedContext = appDelegate.persistentContainer.viewContext
                        
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "FoodsConsumed" )
+        let sort = NSSortDescriptor(key: "created", ascending: true)
+        fetchRequest.sortDescriptors = [sort]
        
         do {
             
             foodsEaten = try managedContext.fetch(fetchRequest)
-            
+            organizeDailyFoodsIntoSections(foodsEaten: foodsEaten)
             logFoodTable.reloadData()
             
         } catch let error as NSError {
@@ -95,7 +106,14 @@ class LogFoodViewController: UIViewController, UIPickerViewDataSource, UIPickerV
             let managedContext =
               appDelegate.persistentContainer.viewContext
             
-            if(selectedFood == nil) {
+            var foodName : String
+            if(selectedFood != nil){
+                foodName = selectedFood?.value(forKey: "name") as! String
+            } else {
+                foodName = ""
+            }
+            
+            if(selectedFood == nil || foodTextField.text != foodName) {
                 
                 
                 
@@ -165,32 +183,110 @@ class LogFoodViewController: UIViewController, UIPickerViewDataSource, UIPickerV
     //===  table view delegate methods =====
     //======================================
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return foodsEaten.count
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 28
     }
+    
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        guard let header = view as? UITableViewHeaderFooterView else { return }
+        header.textLabel?.textColor = UIColor(red: 105.0/255.0, green: 105.0/255.0, blue: 105.0/255.0, alpha: 1.0)
+        header.textLabel?.font = UIFont(name: "Futura-Bold", size: 16)
+        header.textLabel?.frame = header.frame
+        header.textLabel?.textAlignment = .center
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        let foodDay = organizedFoodDays[section]
+        let foodArray = foodDay.foodsEaten
+        
+        return foodArray.count + 1
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return totalFoodDays
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        
+        let foodDay = organizedFoodDays[indexPath.section]
+    
+        if indexPath.row < foodDay.foodsEaten.count {
+            
+            return 38
+            
+        } else {
+            
+            return 28
+            
+        }
+        
+    }
+    
+    //only workout set rows should be editable
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        
+        let foodDay = organizedFoodDays[indexPath.section]
+        if indexPath.row < foodDay.foodsEaten.count {
+            return true
+        }
+        
+        return false
+        
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+           
+        let foodDay = organizedFoodDays[section]
+    
+        return foodDay.date
+           
+    }
+    
+    
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "FoodLogCell", for: indexPath) as! FoodsEatenTableViewCell
+        let foodDay = organizedFoodDays[indexPath.section]
+        let foodArray = foodDay.foodsEaten
+        
+        if indexPath.row < foodArray.count {
+            
+            let cell = tableView.dequeueReusableCell(withIdentifier: "FoodLogCell", for: indexPath) as! FoodsEatenTableViewCell
 
-        let foodEaten = foodsEaten[indexPath.row]
-        
-        
-        let formatter2 = DateFormatter()
-        formatter2.dateFormat = "HH:mm:ss a"
-        let timeNow = formatter2.string(from: foodEaten.value(forKey: "created") as! Date)
-        
-        let food = foodEaten.value(forKeyPath: "ofFood") as? NSManagedObject
-        let foodName = food?.value(forKey: "name") as! String
-        
-        cell.caloriesLabel?.text =  String(format: "%d", food?.value(forKey: "calories") as! Int)
-        
-        cell.foodName?.text = foodName
-        cell.dateEaten?.text = timeNow
+            let foodEaten = foodsEaten[indexPath.row]
+            
+            
+            let formatter2 = DateFormatter()
+            formatter2.dateFormat = "HH:mm:ss a"
+            let timeNow = formatter2.string(from: foodEaten.value(forKey: "created") as! Date)
+            
+            let food = foodEaten.value(forKeyPath: "ofFood") as? NSManagedObject
+            let foodName = food?.value(forKey: "name") as! String
+            
+            cell.caloriesLabel?.text =  String(format: "%d", food?.value(forKey: "calories") as! Int)
+            
+            cell.foodName?.text = foodName
+            cell.dateEaten?.text = timeNow
 
-        return cell
+            return cell
+            
+        } else {
+            
+            let cell = tableView.dequeueReusableCell(withIdentifier: "CalorieTotalCell", for: indexPath) as! CalorieTotalTableViewCell
+            
+            cell.totalCalories?.text = String(format: "%d", foodDay.totalDailyCalories)
+            cell.totalCaloriesLabel?.text = "Total Daily Calories"
+            
+            return cell
+            
+        }
+        
+        
         
     }
+    
+
     
     // this method handles row deletion
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
@@ -205,15 +301,46 @@ class LogFoodViewController: UIViewController, UIPickerViewDataSource, UIPickerV
             }
             
             let managedContext = appDelegate.persistentContainer.viewContext
-            let setToDelete = foodsEaten[indexPath.row]
+            
+            //find set to delete
+            var indexToDelete = 0
+            if(indexPath.section > 0){
+                for i in 0 ... indexPath.section - 1 {
+                    
+                    let currentFoodDay = organizedFoodDays[i]
+                    indexToDelete += currentFoodDay.foodsEaten.count
+                    
+                }
+            }
+
+            
+            indexToDelete += indexPath.row
+            
+            let setToDelete = foodsEaten[indexToDelete]
+            let foodDay = organizedFoodDays[indexPath.section]
+            let foodEatenArray = foodDay.foodsEaten
+            
+            var sectionToDelete = -1
+            //if this is the last set in the day we need to delete the whole section
+            if foodEatenArray.count == 1 {
+                sectionToDelete = indexPath.section
+            }
+            
             managedContext.delete(setToDelete)
             
             do {
                 try managedContext.save()
-                foodsEaten.remove(at: indexPath.row)
-                // delete the table view row
-                tableView.deleteRows(at: [indexPath], with: .fade)
-                      
+                foodsEaten.remove(at: indexToDelete)
+                organizeDailyFoodsIntoSections(foodsEaten: foodsEaten)
+                if sectionToDelete > -1 {
+                    let indexSet = IndexSet(arrayLiteral: indexPath.section)
+                    tableView.deleteSections(indexSet, with: .fade)
+                } else {
+                    tableView.deleteRows(at: [indexPath], with: .fade)
+                }
+        
+                logFoodTable.reloadData()
+                
             } catch let error as NSError {
                 print("Could not delete. \(error), \(error.userInfo)")
             }
@@ -225,13 +352,19 @@ class LogFoodViewController: UIViewController, UIPickerViewDataSource, UIPickerV
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        let foodEaten = foodsEaten[indexPath.row]
-        let food = foodEaten.value(forKeyPath: "ofFood")
+        let foodDay = organizedFoodDays[indexPath.section]
         
-        selectedFood = food as! NSManagedObject
-    
-        setPickerToCalorieValue(value: selectedFood?.value(forKey: "calories") as! Int)
-        foodTextField.text = selectedFood?.value(forKey: "name") as! String
+        //only should be able to select workout set rows
+        if indexPath.row < foodDay.foodsEaten.count {
+            let selectedFoodEaten = foodDay.foodsEaten[indexPath.row]
+            let food = selectedFoodEaten.value(forKeyPath: "ofFood") as! NSManagedObject
+            let foodName = food.value(forKey: "name") as! String
+            let calories = food.value(forKey: "calories") as! Int
+            
+            selectedFood = food
+            setPickerToCalorieValue(value: calories)
+            foodTextField.text = foodName
+        }
         
     }
     
@@ -296,6 +429,96 @@ class LogFoodViewController: UIViewController, UIPickerViewDataSource, UIPickerV
     
     //===== end picker view delegate methods
     
+    func organizeDailyFoodsIntoSections( foodsEaten: [NSManagedObject]) -> Void {
+        
+        organizedFoodDays = []
+        
+        let calendar = NSCalendar.current
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "EEEE,  MMM d, yyyy"
+           
+        var lastDay = 0
+        var lastMonth = 0
+        var lastYear = 0
+        var dayCounter = 0
+        var totalCals = 0
+        
+        var foodsEatenArray : [NSManagedObject] = []
+           
+        var lastDayString : String = ""
+        
+        for foodEaten in foodsEaten {
+              
+            let created = foodEaten.value(forKey: "created") as! Date
+            let components = calendar.dateComponents([.month, .day, .year], from: created)
+           
+            let day = components.day
+            let month = components.year
+            let year = components.year
+            let dateString = dateFormatter.string(from: created)
+              
+              
+            if lastDay == 0 {
+                //this is first iteration
+                lastDay = day!
+                lastMonth = month!
+                lastYear = year!
+                  
+            }
+              
+            if day != lastDay || month != lastMonth || year != lastYear {
+                  
+                  
+                //copy arrays
+                let copyOfFoodsEatenArray = foodsEatenArray
+          
+              
+                let currentFoodDay = FoodDay(date: lastDayString, foodsEaten: copyOfFoodsEatenArray, totalDailyCalories: totalCals)
+                organizedFoodDays.append(currentFoodDay)
+                  
+                //start a new day dict
+                lastDay = day!
+                lastMonth = month!
+                lastYear = year!
+                dayCounter += 1
+           
+                foodsEatenArray = []
+                totalCals = 0
+                  
+            }
+              
+            let food = foodEaten.value(forKey: "ofFood") as! NSManagedObject
+            let calories = food.value(forKey: "calories") as! Int
+            
+            totalCals += calories
+            
+            foodsEatenArray.append(foodEaten)
+            lastDayString = dateString
+              
+              
+        }
+          
+          
+        //we gotta put the last day into the workout day array (if there are any sets from today)
+        if foodsEatenArray.count > 0 {
+              
+            dayCounter += 1
+                        
+            //copy arrays to day dict
+            let copyOfFoodsEatenArray = foodsEatenArray
+     
+              
+            let currentFoodDay = FoodDay(date: lastDayString, foodsEaten: copyOfFoodsEatenArray, totalDailyCalories: totalCals)
+            organizedFoodDays.append(currentFoodDay)
+            organizedFoodDays.append(currentFoodDay)
+        }
+         
+          
+        totalFoodDays = dayCounter
+        
+        
+    }
+    
     func setPickerToCalorieValue(value: Int) -> Void {
         
         let remainder = value % 100
@@ -321,6 +544,7 @@ class LogFoodViewController: UIViewController, UIPickerViewDataSource, UIPickerV
             try context.save()
             
             foodsEaten.append(newfoodConsumed)
+            organizeDailyFoodsIntoSections(foodsEaten: foodsEaten)
             logFoodTable.reloadData()
             
         } catch let error as NSError {

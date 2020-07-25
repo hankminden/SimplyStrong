@@ -14,6 +14,7 @@
 		7F3E2D1624C7F6E400A389E6 /* LogFoodTabContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F3E2D1524C7F6E400A389E6 /* LogFoodTabContainerViewController.swift */; };
 		7F3E2D1824CA1B5B00A389E6 /* FoodsEatenTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F3E2D1724CA1B5B00A389E6 /* FoodsEatenTableViewCell.swift */; };
 		7F3E2D1A24CB1E1100A389E6 /* WorkoutTotalTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F3E2D1924CB1E1100A389E6 /* WorkoutTotalTableViewCell.swift */; };
+		7F3E2D1C24CBBFBC00A389E6 /* CalorieTotalTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F3E2D1B24CBBFBB00A389E6 /* CalorieTotalTableViewCell.swift */; };
 		7F587E7124C082820022CDAE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F587E7024C082820022CDAE /* AppDelegate.swift */; };
 		7F587E7524C082820022CDAE /* AddSetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F587E7424C082820022CDAE /* AddSetViewController.swift */; };
 		7F587E7824C082820022CDAE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7F587E7624C082820022CDAE /* Main.storyboard */; };
@@ -51,6 +52,7 @@
 		7F3E2D1524C7F6E400A389E6 /* LogFoodTabContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogFoodTabContainerViewController.swift; sourceTree = "<group>"; };
 		7F3E2D1724CA1B5B00A389E6 /* FoodsEatenTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodsEatenTableViewCell.swift; sourceTree = "<group>"; };
 		7F3E2D1924CB1E1100A389E6 /* WorkoutTotalTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutTotalTableViewCell.swift; sourceTree = "<group>"; };
+		7F3E2D1B24CBBFBB00A389E6 /* CalorieTotalTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalorieTotalTableViewCell.swift; sourceTree = "<group>"; };
 		7F587E6D24C082820022CDAE /* Simply Strong.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Simply Strong.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7F587E7024C082820022CDAE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7F587E7424C082820022CDAE /* AddSetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSetViewController.swift; sourceTree = "<group>"; };
@@ -121,6 +123,7 @@
 				7FFC67F424C3387900CF991C /* WorkoutSetsTableViewCell.swift */,
 				7F3E2D1724CA1B5B00A389E6 /* FoodsEatenTableViewCell.swift */,
 				7F3E2D1924CB1E1100A389E6 /* WorkoutTotalTableViewCell.swift */,
+				7F3E2D1B24CBBFBB00A389E6 /* CalorieTotalTableViewCell.swift */,
 			);
 			path = TableViewCells;
 			sourceTree = "<group>";
@@ -309,6 +312,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7F3E2D1C24CBBFBC00A389E6 /* CalorieTotalTableViewCell.swift in Sources */,
 				7F3E2D0B24C60FD900A389E6 /* AddExerciseViewController.swift in Sources */,
 				7F587E7B24C082820022CDAE /* Simply_Strong.xcdatamodeld in Sources */,
 				7F587E7524C082820022CDAE /* AddSetViewController.swift in Sources */,
