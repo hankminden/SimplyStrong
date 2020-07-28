@@ -22,7 +22,7 @@ class LogFoodTabContainerViewController: UIViewController {
         super.viewDidAppear(animated)
         
         
-        if(doShowModal){
+        /*if(doShowModal){
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let logFoodVC = storyboard.instantiateViewController(withIdentifier: "logFoodVC") as! LogFoodViewController
             logFoodVC.mainVC = self
@@ -31,7 +31,7 @@ class LogFoodTabContainerViewController: UIViewController {
             self.present(logFoodVC, animated: true) {
                    
             }
-        }
+        }*/
 
         
     }

@@ -84,7 +84,7 @@ class WorkoutPickerViewController: UIViewController, UIPickerViewDataSource, UIP
         if (pickerLabel == nil)
         {
             pickerLabel = UILabel()
-
+            pickerLabel?.textColor = UIColor(red: 84.0/255.0, green: 199.0/255.0, blue: 252.0/255.0, alpha: 1.0)
             pickerLabel?.font = UIFont(name: "Futura", size: 18)
             pickerLabel?.textAlignment = NSTextAlignment.center
         }

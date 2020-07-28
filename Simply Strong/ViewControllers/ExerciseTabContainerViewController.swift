@@ -23,7 +23,7 @@ class ExerciseTabContainerViewController: UIViewController {
         super.viewDidAppear(animated)
         
         
-        if(doShowModal){
+        /*if(doShowModal){
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let addSetVC = storyboard.instantiateViewController(withIdentifier: "addSetVC") as! AddSetViewController
             addSetVC.mainVC = self
@@ -32,7 +32,7 @@ class ExerciseTabContainerViewController: UIViewController {
             self.present(addSetVC, animated: true) {
                    
             }
-        }
+        }*/
 
         
     }

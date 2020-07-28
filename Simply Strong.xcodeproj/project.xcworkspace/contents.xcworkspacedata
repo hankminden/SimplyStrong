@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:Simply Strong.xcodeproj">
+      location = "self:/Users/henryminden/Projects/Simply Strong/Simply Strong.xcodeproj">
    </FileRef>
 </Workspace>

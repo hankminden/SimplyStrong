@@ -18,14 +18,15 @@ struct WorkoutDay {
 
 class AddSetViewController: UIViewController, UITableViewDataSource, UITableViewDelegate  {
 
-    
-    weak var mainVC : ExerciseTabContainerViewController?
+    weak var pvc : MainPageViewController?
+    //weak var mainVC : ExerciseTabContainerViewController?
    
     @IBOutlet var pickWorkoutButton: UIButton!
     @IBOutlet var addSetButton: UIButton!
     @IBOutlet var tableView: UITableView!
     @IBOutlet var repsDisplayLabel: UILabel!
     
+    @IBOutlet var homeButton: UIButton!
     
     
     var repsCountValue: Int = 0
@@ -389,7 +390,13 @@ class AddSetViewController: UIViewController, UITableViewDataSource, UITableView
     }
     
 
-
+    @IBAction func homeTouched(_ sender: Any) {
+        
+        let firstVC = pvc!.pages[1]
+        pvc!.setViewControllers([firstVC], direction: .reverse, animated: true, completion: nil)
+        
+    }
+    
     @IBAction func repCountIncreaseTouched(_ sender: Any) {
         
         repsCountValue += 1
@@ -447,11 +454,11 @@ class AddSetViewController: UIViewController, UITableViewDataSource, UITableView
     
     @IBAction func doneTouched(_ sender: Any) {
         
-        self.mainVC?.doShowModal = false
+        /*self.mainVC?.doShowModal = false
         self.dismiss(animated: true) {
             
             self.mainVC?.goBackHome()
-        }
+        }*/
         
     }
     

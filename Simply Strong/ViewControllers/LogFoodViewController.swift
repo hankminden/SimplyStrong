@@ -9,26 +9,38 @@
 import UIKit
 import CoreData
 
+
 struct FoodDay {
     var date : String
     var foodsEaten : [NSManagedObject] = []
     var totalDailyCalories : Int
 }
 
-class LogFoodViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource {
+class LogFoodViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource, SuggestionManagerDelegate {
+
+    
     
 
-
-    weak var mainVC : LogFoodTabContainerViewController?
+    weak var pvc : MainPageViewController?
+    //weak var mainVC : LogFoodTabContainerViewController?
     var selectedFood : NSManagedObject?
     var calSelected : Int = 0
     var foods : [NSManagedObject] = []
     var foodsEaten : [NSManagedObject] = []
+    @IBOutlet var homeButton: UIButton!
     
     var totalFoodDays = 0
     var organizedFoodDays: [FoodDay] = []
     
     @IBOutlet var logFoodTable: UITableView!
+    
+    @IBOutlet var foodSuggestionTable: UITableView!
+    var suggestionTableMgr: SuggestionManager?
+    var foodSuggestionTableHidden = true
+    
+    @IBOutlet var foodSuggestionHeight: NSLayoutConstraint!
+    @IBOutlet var topSupportString: NSLayoutConstraint!
+    
     @IBOutlet var caloriePicker: UIPickerView!
     @IBOutlet var logFoodButton: UIButton!
     @IBOutlet var foodTextField: UITextField!
@@ -39,6 +51,17 @@ class LogFoodViewController: UIViewController, UIPickerViewDataSource, UIPickerV
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+       
+        
+        //setup food suggestion table
+        //foodSuggestionTable.alpha = 0
+        suggestionTableMgr = SuggestionManager( withDelegate: self)
+        foodSuggestionTable.delegate = suggestionTableMgr
+        foodSuggestionTable.dataSource = suggestionTableMgr
+        foodSuggestionTable.layer.cornerRadius = 8
+        foodSuggestionTable.layer.borderWidth = 3
+        foodSuggestionTable.layer.borderColor = borderGray.cgColor
         
         caloriePicker.delegate = self
         logFoodTable.delegate = self
@@ -80,14 +103,20 @@ class LogFoodViewController: UIViewController, UIPickerViewDataSource, UIPickerV
         
     }
     
-
+    @IBAction func homeTouched(_ sender: Any) {
+        
+        let firstVC = pvc!.pages[1]
+        pvc!.setViewControllers([firstVC], direction: .forward, animated: true, completion: nil)
+        
+    }
+    
     @IBAction func doneTouched(_ sender: Any) {
         
-        self.mainVC?.doShowModal = false
+        /*self.mainVC?.doShowModal = false
          self.dismiss(animated: true) {
              
              self.mainVC?.goBackHome()
-         }
+         }*/
         
     }
     
@@ -254,7 +283,7 @@ class LogFoodViewController: UIViewController, UIPickerViewDataSource, UIPickerV
             
             let cell = tableView.dequeueReusableCell(withIdentifier: "FoodLogCell", for: indexPath) as! FoodsEatenTableViewCell
 
-            let foodEaten = foodsEaten[indexPath.row]
+            let foodEaten = foodArray[indexPath.row]
             
             
             let formatter2 = DateFormatter()
@@ -389,8 +418,8 @@ class LogFoodViewController: UIViewController, UIPickerViewDataSource, UIPickerV
         if (pickerLabel == nil)
         {
             pickerLabel = UILabel()
-
-            pickerLabel?.font = UIFont(name: "Futura", size: 18)
+            pickerLabel?.textColor = UIColor(red: 84.0/255.0, green: 199.0/255.0, blue: 252.0/255.0, alpha: 1.0)
+            pickerLabel?.font = UIFont(name: "Futura-Bold", size: 22)
             pickerLabel?.textAlignment = NSTextAlignment.center
         }
 
@@ -553,10 +582,85 @@ class LogFoodViewController: UIViewController, UIPickerViewDataSource, UIPickerV
         
     }
     
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+        
+        suggestionTableMgr?.searchForFood(searchTerm: textField.text!)
+        
+    }
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
+        hideFoodSuggestionTable()
         return true
     }
     
+    func showFoodSuggestionTable() -> Void {
+        
+        self.topSupportString.constant = -102
+        self.foodSuggestionHeight.constant = 180
+        self.view.setNeedsUpdateConstraints()
+
+       
+        UIView.animate(withDuration: 1.0, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 18.0, options: UIView.AnimationOptions(rawValue: 0), animations: {
+            //self.foodSuggestionTable.alpha = 1
+            self.view.layoutIfNeeded()
+            
+        }) { (true) in
+            self.foodSuggestionTableHidden = false
+        }
+        
+    }
+    
+    func hideFoodSuggestionTable() -> Void {
+
+        
+        self.topSupportString.constant = 40
+        self.foodSuggestionHeight.constant = 0
+        self.view.setNeedsUpdateConstraints()
+    
+        UIView.animate(withDuration: 1.0, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 18.0, options: UIView.AnimationOptions(rawValue: 0), animations: {
+            //self.foodSuggestionTable.alpha = 0
+            self.view.layoutIfNeeded()
+            
+        }) { (true) in
+            self.foodSuggestionTableHidden = true
+        }
+        
+    }
+    
+    //==========================================
+    //===  food suggestion delegate methods ====
+    //==========================================
+    
+    func foodSuggestionsFound() {
+        
+        if foodSuggestionTableHidden {
+            showFoodSuggestionTable()
+        }
+        
+    }
+    
+    func foodSuggestionSelected(foodSelected: NSManagedObject) {
+        
+        
+        let foodName = foodSelected.value(forKey: "name") as! String
+        let calories = foodSelected.value(forKey: "calories") as! Int
+        
+        selectedFood = foodSelected
+        setPickerToCalorieValue(value: calories)
+        foodTextField.text = foodName
+        
+        hideFoodSuggestionTable()
+        foodTextField.resignFirstResponder()
+        
+    }
   
+    func reloadSuggestionTable() {
+        
+        foodSuggestionTable.reloadData()
+        
+    }
+    
+
+    
 }
