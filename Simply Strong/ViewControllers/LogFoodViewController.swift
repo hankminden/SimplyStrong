@@ -11,7 +11,8 @@ import CoreData
 
 
 struct FoodDay {
-    var date : String
+    var date : Date
+    var dateString : String
     var foodsEaten : [NSManagedObject] = []
     var totalDailyCalories : Int
 }
@@ -268,7 +269,7 @@ class LogFoodViewController: UIViewController, UIPickerViewDataSource, UIPickerV
            
         let foodDay = organizedFoodDays[section]
     
-        return foodDay.date
+        return foodDay.dateString
            
     }
     
@@ -475,6 +476,7 @@ class LogFoodViewController: UIViewController, UIPickerViewDataSource, UIPickerV
         var foodsEatenArray : [NSManagedObject] = []
            
         var lastDayString : String = ""
+        var lastCreated : Date = Date()
         
         for foodEaten in foodsEaten {
               
@@ -502,7 +504,7 @@ class LogFoodViewController: UIViewController, UIPickerViewDataSource, UIPickerV
                 let copyOfFoodsEatenArray = foodsEatenArray
           
               
-                let currentFoodDay = FoodDay(date: lastDayString, foodsEaten: copyOfFoodsEatenArray, totalDailyCalories: totalCals)
+                let currentFoodDay = FoodDay(date: lastCreated ,dateString: lastDayString, foodsEaten: copyOfFoodsEatenArray, totalDailyCalories: totalCals)
                 organizedFoodDays.append(currentFoodDay)
                   
                 //start a new day dict
@@ -523,7 +525,7 @@ class LogFoodViewController: UIViewController, UIPickerViewDataSource, UIPickerV
             
             foodsEatenArray.append(foodEaten)
             lastDayString = dateString
-              
+            lastCreated = created
               
         }
           
@@ -537,9 +539,9 @@ class LogFoodViewController: UIViewController, UIPickerViewDataSource, UIPickerV
             let copyOfFoodsEatenArray = foodsEatenArray
      
               
-            let currentFoodDay = FoodDay(date: lastDayString, foodsEaten: copyOfFoodsEatenArray, totalDailyCalories: totalCals)
+            let currentFoodDay = FoodDay(date: lastCreated ,dateString: lastDayString, foodsEaten: copyOfFoodsEatenArray, totalDailyCalories: totalCals)
             organizedFoodDays.append(currentFoodDay)
-            organizedFoodDays.append(currentFoodDay)
+            
         }
          
           

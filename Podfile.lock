@@ -1,0 +1,30 @@
+PODS:
+  - Charts (3.5.0):
+    - Charts/Core (= 3.5.0)
+  - Charts/Core (3.5.0)
+  - SwiftCharts (0.6.5)
+
+DEPENDENCIES:
+  - Charts
+  - SwiftCharts (from `https://github.com/i-schuetz/SwiftCharts.git`)
+
+SPEC REPOS:
+  trunk:
+    - Charts
+
+EXTERNAL SOURCES:
+  SwiftCharts:
+    :git: https://github.com/i-schuetz/SwiftCharts.git
+
+CHECKOUT OPTIONS:
+  SwiftCharts:
+    :commit: f5cee87337a50af9e41367f73436dafaaacd3f11
+    :git: https://github.com/i-schuetz/SwiftCharts.git
+
+SPEC CHECKSUMS:
+  Charts: 40a08591df1f8ad5c223ddedfb1a06da92f24f7c
+  SwiftCharts: 761c64373b11985ee8b6195b521c319aede0a9fc
+
+PODFILE CHECKSUM: 6f92a4e5dd5d6e279afb87c6f409c69da989beee
+
+COCOAPODS: 1.9.3

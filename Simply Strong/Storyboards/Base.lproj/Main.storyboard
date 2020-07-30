@@ -387,12 +387,56 @@
                                 <color key="textColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cHK-pX-jAU">
+                                <rect key="frame" x="14" y="425" width="386" height="276"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Z8a-we-gFn" customClass="LineChartView" customModule="Charts">
+                                        <rect key="frame" x="10" y="10" width="366" height="256"/>
+                                        <color key="backgroundColor" systemColor="systemGray6Color" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="256" id="hM2-Gu-ne7"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="Z8a-we-gFn" firstAttribute="top" secondItem="cHK-pX-jAU" secondAttribute="top" constant="10" id="TYe-NH-CrF"/>
+                                    <constraint firstAttribute="bottom" secondItem="Z8a-we-gFn" secondAttribute="bottom" constant="10" id="dQf-vW-2KH"/>
+                                    <constraint firstItem="Z8a-we-gFn" firstAttribute="leading" secondItem="cHK-pX-jAU" secondAttribute="leading" constant="10" id="nRh-3Q-QEj"/>
+                                    <constraint firstAttribute="trailing" secondItem="Z8a-we-gFn" secondAttribute="trailing" constant="10" id="oTt-s2-pTe"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TiA-ia-w3f">
+                                <rect key="frame" x="14" y="98" width="386" height="276"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="r9W-C5-Fb0" customClass="BarChartView" customModule="Charts">
+                                        <rect key="frame" x="10" y="10" width="366" height="256"/>
+                                        <color key="backgroundColor" systemColor="systemGray6Color" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="256" id="iNg-jK-rh0"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="r9W-C5-Fb0" firstAttribute="leading" secondItem="TiA-ia-w3f" secondAttribute="leading" constant="10" id="1Wh-YE-Vhx"/>
+                                    <constraint firstItem="r9W-C5-Fb0" firstAttribute="top" secondItem="TiA-ia-w3f" secondAttribute="top" constant="10" id="Bee-6z-iMD"/>
+                                    <constraint firstAttribute="bottom" secondItem="r9W-C5-Fb0" secondAttribute="bottom" constant="10" id="Ff0-Ar-fKD"/>
+                                    <constraint firstAttribute="trailing" secondItem="r9W-C5-Fb0" secondAttribute="trailing" constant="10" id="SJ6-VD-hm0"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
+                            <constraint firstItem="TiA-ia-w3f" firstAttribute="width" secondItem="cHK-pX-jAU" secondAttribute="width" id="BBD-nQ-NwG"/>
                             <constraint firstItem="dFq-zu-WF6" firstAttribute="centerY" secondItem="eVf-m7-OZV" secondAttribute="centerY" id="BEb-XA-mEb"/>
+                            <constraint firstItem="cHK-pX-jAU" firstAttribute="width" secondItem="RtR-Hb-DJ9" secondAttribute="width" constant="-28" id="BcS-ty-2G0"/>
+                            <constraint firstItem="TiA-ia-w3f" firstAttribute="top" secondItem="eVf-m7-OZV" secondAttribute="bottom" constant="18" id="Jdx-cv-99g"/>
                             <constraint firstItem="HOY-z4-daQ" firstAttribute="centerY" secondItem="eVf-m7-OZV" secondAttribute="centerY" id="OSL-m2-rEQ"/>
+                            <constraint firstItem="TiA-ia-w3f" firstAttribute="centerX" secondItem="ZbT-kP-5ag" secondAttribute="centerX" id="Qse-9p-NNW"/>
+                            <constraint firstItem="cHK-pX-jAU" firstAttribute="centerX" secondItem="ZbT-kP-5ag" secondAttribute="centerX" id="QwW-Tu-jID"/>
                             <constraint firstItem="mDR-q8-ke5" firstAttribute="centerY" secondItem="dFq-zu-WF6" secondAttribute="centerY" id="UVW-Vl-Kia"/>
+                            <constraint firstItem="cHK-pX-jAU" firstAttribute="top" secondItem="TiA-ia-w3f" secondAttribute="bottom" constant="51" id="Xn0-aA-sei"/>
                             <constraint firstItem="HOY-z4-daQ" firstAttribute="leading" secondItem="eVf-m7-OZV" secondAttribute="leading" constant="38" id="bGm-Fy-kem"/>
                             <constraint firstItem="eVf-m7-OZV" firstAttribute="top" secondItem="ZbT-kP-5ag" secondAttribute="top" id="bbw-1J-TEc"/>
                             <constraint firstItem="dFq-zu-WF6" firstAttribute="trailing" secondItem="mDR-q8-ke5" secondAttribute="trailing" constant="38" id="hz4-Ch-0PU"/>
@@ -402,13 +446,17 @@
                         <viewLayoutGuide key="safeArea" id="ZbT-kP-5ag"/>
                     </view>
                     <connections>
+                        <outlet property="calorieBarChart" destination="r9W-C5-Fb0" id="YwL-pN-iUH"/>
+                        <outlet property="calorieChartContainer" destination="TiA-ia-w3f" id="IWv-E8-pcE"/>
                         <outlet property="logFoodButton" destination="eVf-m7-OZV" id="irF-Rl-Y8E"/>
                         <outlet property="logSetButton" destination="dFq-zu-WF6" id="yM9-gU-YSs"/>
+                        <outlet property="workoutLineChart" destination="Z8a-we-gFn" id="DND-XU-QP1"/>
+                        <outlet property="workoutViewContainer" destination="cHK-pX-jAU" id="jBr-OR-xBk"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Kqy-go-Eii" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="713" y="-1092"/>
+            <point key="canvasLocation" x="711.59420289855075" y="-1092.1875"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="VQz-NA-7U2">

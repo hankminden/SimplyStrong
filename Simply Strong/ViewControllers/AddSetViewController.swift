@@ -13,7 +13,8 @@ struct WorkoutDay {
     var setTypes : [String]
     var setDict = [String: Int]()
     var setArray : [NSManagedObject]
-    var date : String
+    var dateString : String
+    var date : Date
 }
 
 class AddSetViewController: UIViewController, UITableViewDataSource, UITableViewDelegate  {
@@ -93,8 +94,7 @@ class AddSetViewController: UIViewController, UITableViewDataSource, UITableView
         }
         
         
-        
-        
+
         
      
         pickWorkoutButton.layer.cornerRadius = 18
@@ -214,7 +214,7 @@ class AddSetViewController: UIViewController, UITableViewDataSource, UITableView
         
         let workoutDay = organizedWorkoutSets[section]
  
-        return workoutDay.date
+        return workoutDay.dateString
         
     }
     
@@ -520,6 +520,7 @@ class AddSetViewController: UIViewController, UITableViewDataSource, UITableView
         var setArray : [NSManagedObject] = []
         
         var lastDayString : String = ""
+        var lastCreated : Date = Date()
         
         for workoutSet in workoutSets {
             
@@ -551,7 +552,7 @@ class AddSetViewController: UIViewController, UITableViewDataSource, UITableView
                 let copyOfSets = setArray
       
             
-                let currentWorkoutDay = WorkoutDay(setTypes: copyOfSetTypes, setDict: copyOfSetDict, setArray: copyOfSets, date: lastDayString)
+                let currentWorkoutDay = WorkoutDay(setTypes: copyOfSetTypes, setDict: copyOfSetDict, setArray: copyOfSets, dateString: lastDayString, date: lastCreated)
                 organizedWorkoutSets.append(currentWorkoutDay)
                 
                 //start a new day dict
@@ -580,7 +581,7 @@ class AddSetViewController: UIViewController, UITableViewDataSource, UITableView
             }
             setArray.append(workoutSet)
             lastDayString = dateString
-            
+            lastCreated = created
             
         }
         
@@ -595,13 +596,89 @@ class AddSetViewController: UIViewController, UITableViewDataSource, UITableView
             let copyOfSetDict = setDict
             let copyOfSets = setArray
             
-            let currentWorkoutDay = WorkoutDay(setTypes: copyOfSetTypes, setDict: copyOfSetDict, setArray: copyOfSets, date: lastDayString)
+            let currentWorkoutDay = WorkoutDay(setTypes: copyOfSetTypes, setDict: copyOfSetDict, setArray: copyOfSets, dateString: lastDayString, date: lastCreated)
                              organizedWorkoutSets.append(currentWorkoutDay)
         }
        
         
         totalDaysOfWorkouts = dayCounter
         
+        
+    }
+    
+    func populateDBForTesting() -> Void {
+        
+        
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+             return
+         }
+         
+        let managedContext = appDelegate.persistentContainer.viewContext
+         
+         
+        
+        
+        var calendar = Calendar.current
+        calendar.timeZone = NSTimeZone.local
+
+        //get start of day 7 days ago
+        let today = calendar.startOfDay(for: Date())
+        
+        let entity = NSEntityDescription.entity(forEntityName: "Sets", in: managedContext)!
+        //how many days to go back
+        for i in 0 ... 21 {
+            
+            let created = calendar.date(byAdding: .day, value: -i, to: today)
+            
+            for j in 0 ... exercises.count - 1 {
+                
+                let exercise = exercises[j]
+                
+                let set = NSManagedObject(entity: entity, insertInto: managedContext)
+                set.setValue((i+1) * (j+1), forKeyPath: "noReps")
+                set.setValue(created, forKeyPath: "created")
+                set.setValue(exercise, forKeyPath: "ofExercise")
+                           
+                do {
+                    try managedContext.save()
+                          
+                } catch let error as NSError {
+                    print("Could not save. \(error), \(error.userInfo)")
+                }
+                
+            }
+            
+           
+            
+            
+        }
+        
+    }
+    
+    func deleteSetsForTesting() -> Void {
+        
+        
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+             return
+         }
+         
+        let managedContext = appDelegate.persistentContainer.viewContext
+        
+        //let entity = NSEntityDescription.entity(forEntityName: "Sets", in: managedContext)!
+        
+        
+        for i in 0 ... workoutSets.count - 1 {
+         
+            let setToDelete = workoutSets[i]
+            managedContext.delete(setToDelete)
+            
+            do {
+                try managedContext.save()
+                      
+            } catch let error as NSError {
+                print("Could not save. \(error), \(error.userInfo)")
+            }
+        }
         
     }
     
