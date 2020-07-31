@@ -102,6 +102,8 @@ class LogFoodViewController: UIViewController, UIPickerViewDataSource, UIPickerV
             print("Could not fetch. \(error), \(error.userInfo)")
         }
         
+        //populateDBForTesting()
+        
     }
     
     @IBAction func homeTouched(_ sender: Any) {
@@ -663,6 +665,65 @@ class LogFoodViewController: UIViewController, UIPickerViewDataSource, UIPickerV
         
     }
     
+    func populateDBForTesting() -> Void {
+        
+        
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+             return
+         }
+         
+        let managedContext = appDelegate.persistentContainer.viewContext
+         
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Foods" )
+        
+         do {
+             
+            foods = try managedContext.fetch(fetchRequest)
+            
+            var calendar = Calendar.current
+            calendar.timeZone = NSTimeZone.local
+
+            //get start of day 7 days ago
+            let today = calendar.startOfDay(for: Date())
+            
+            let entity = NSEntityDescription.entity(forEntityName: "FoodsConsumed", in: managedContext)!
+            //how many days to go back
+            for i in 0 ... 21 {
+                
+                let created = calendar.date(byAdding: .day, value: -i, to: today)
+                
+                for j in 0 ... foods.count - 1 {
+                    
+                    let food = foods[j]
+                    
+                    let foodConsumed = NSManagedObject(entity: entity, insertInto: managedContext)
+          
+                    foodConsumed.setValue(created, forKeyPath: "created")
+                    foodConsumed.setValue(food, forKeyPath: "ofFood")
+                               
+                    do {
+                        try managedContext.save()
+                              
+                    } catch let error as NSError {
+                        print("Could not save. \(error), \(error.userInfo)")
+                    }
+                    
+                }
+                
+               
+                
+                
+            }
+             
+            
+         } catch let error as NSError {
+             print("Could not fetch. \(error), \(error.userInfo)")
+         }
+        
+        
+        
+        
+    }
 
     
 }

@@ -20,6 +20,7 @@ class HomeViewController: UIViewController, ChartViewDelegate {
     var calorieData : BarChartData?
     var workoutChartData : LineChartData?
     var workoutChartXAxisLabels : [String] = []
+    var foodChartXAxisLabels : [String] = []
     
     
     @IBOutlet var calorieBarChart: BarChartView!
@@ -31,6 +32,7 @@ class HomeViewController: UIViewController, ChartViewDelegate {
     @IBOutlet var calorieChartContainer: UIView!
     
     var workoutDayLookup : [String:Int] = [:]
+    var foodDayLookup : [String:Int] = [:]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -68,14 +70,14 @@ class HomeViewController: UIViewController, ChartViewDelegate {
             setupWorkoutChart( workoutDays: workOutDays)
         }
         
-        /*print(workOutDays.count)
-        for i in 0 ... workOutDays.count - 1 {
+        print(foodDays.count)
+        for i in 0 ... foodDays.count - 1 {
             
-            let workoutDay = workOutDays[i]
-            print(workoutDay.date, workoutDay.dateString, workoutDay.setDict)
+            let foodDay = foodDays[i]
+            print(foodDay.date, foodDay.dateString, foodDay.totalDailyCalories)
             
         }
-        print(workoutDayLookup)*/
+        print(foodDayLookup)
     }
 
     @IBAction func testButtonTouched(_ sender: Any) {
@@ -126,7 +128,10 @@ class HomeViewController: UIViewController, ChartViewDelegate {
         
         workoutLineChart.delegate = self
         
-        workoutLineChart.chartDescription?.enabled = false
+        workoutLineChart.chartDescription?.enabled = true
+        workoutLineChart.chartDescription?.font = UIFont(name: "Futura", size: 10)!
+        workoutLineChart.chartDescription?.text = "Total Daily Workouts"
+        //workoutLineChart.chartDescription?.position = CGPoint.init(x: 0.0, y: 0.0)
 
         workoutLineChart.leftAxis.enabled = false
         workoutLineChart.rightAxis.drawAxisLineEnabled = false
@@ -156,10 +161,18 @@ class HomeViewController: UIViewController, ChartViewDelegate {
         
         calorieBarChart.delegate = self
         
-        calorieBarChart.chartDescription?.enabled = false
+        calorieBarChart.chartDescription?.enabled = true
+        calorieBarChart.chartDescription?.font = UIFont(name: "Futura", size: 10)!
+        calorieBarChart.chartDescription?.text = "Total Daily Calories"
+      
         calorieBarChart.maxVisibleCount = 60
         calorieBarChart.pinchZoomEnabled = false
         calorieBarChart.drawBarShadowEnabled = false
+        
+        calorieBarChart.leftAxis.enabled = false
+        calorieBarChart.rightAxis.drawAxisLineEnabled = false
+        calorieBarChart.xAxis.drawAxisLineEnabled = false
+        
         
         let xAxis = calorieBarChart.xAxis
         xAxis.labelPosition = .bottom
@@ -167,39 +180,15 @@ class HomeViewController: UIViewController, ChartViewDelegate {
 
         calorieBarChart.leftAxis.labelFont = UIFont(name: "Futura", size: 8)!
         calorieBarChart.rightAxis.labelFont = UIFont(name: "Futura", size: 8)!
-        calorieBarChart.legend.font = UIFont(name: "Futura", size: 10)!
-        let leg = LegendEntry(label: "Daily Calories", form: .none, formSize: CGFloat.nan, formLineWidth: CGFloat.nan, formLineDashPhase: CGFloat.nan, formLineDashLengths: [CGFloat.nan], formColor: nil)
-        calorieBarChart.legend.setCustom(entries: [leg])
+        calorieBarChart.legend.enabled = false
+
         calorieBarChart.fitBars = true
         calorieBarChart.xAxis.granularity = 1
         
-        var days : [String] = []
-        var yVals : [BarChartDataEntry] = []
-        var customColors : [NSUIColor] = []
-        for i in 0 ... foodDays.count - 1 {
-            let foodDay = foodDays[i]
-            let entry = BarChartDataEntry(x: Double(i), y: Double(foodDay.totalDailyCalories))
-            if i == foodDays.count - 1 {
-                days.append("Today")
-                customColors.append(UIColor.darkGray)
-            } else {
-                days.append(foodDay.dateString)
-                customColors.append(UIColor(red: 84.0/255.0, green: 199.0/255.0, blue: 252.0/255.0, alpha: 1.0))
-            }
-          
-            yVals.append(entry)
-        }
+        organizeAndChartCaloriesConsumed(lastWeekFoodConsumed: foodDays)
         
+        calorieBarChart.xAxis.valueFormatter = IndexAxisValueFormatter(values:foodChartXAxisLabels)
         
-        calorieBarChart.xAxis.valueFormatter = IndexAxisValueFormatter(values:days)
-        
-        
-        
-        let set1 = BarChartDataSet(entries: yVals, label: "Daily Calories")
-        set1.colors = customColors
-        set1.drawValuesEnabled = false
-        
-        calorieData = BarChartData(dataSet: set1)
         calorieBarChart.animate(yAxisDuration: 1 , easingOption: ChartEasingOption.linear)
         calorieBarChart.data = calorieData
         
@@ -215,10 +204,22 @@ class HomeViewController: UIViewController, ChartViewDelegate {
          }
                         
          let managedContext = appDelegate.persistentContainer.viewContext
+        
+        var calendar = Calendar.current
+        calendar.timeZone = NSTimeZone.local
+
+        //get start of day 7 days ago
+        let today = calendar.startOfDay(for: Date())
+        let dateFrom = calendar.date(byAdding: .day, value: -7, to: today)
+        let fromPredicate = NSPredicate(format: "created >= %@",  dateFrom! as NSDate)
+        
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "FoodsConsumed" )
+        
+        let sort = NSSortDescriptor(key: "created", ascending: true)
+        fetchRequest.sortDescriptors = [sort]
+        fetchRequest.predicate = fromPredicate
                         
-         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "FoodsConsumed" )
-         let sort = NSSortDescriptor(key: "created", ascending: true)
-         fetchRequest.sortDescriptors = [sort]
+     
         
          do {
              
@@ -236,6 +237,10 @@ class HomeViewController: UIViewController, ChartViewDelegate {
             var lastYear = 0
             var dayCounter = 0
             var totalCals = 0
+            
+            var day : Int = 0
+            var month : Int = 0
+            var year : Int = 0
                
             var foodsEatenArray : [NSManagedObject] = []
                   
@@ -247,22 +252,25 @@ class HomeViewController: UIViewController, ChartViewDelegate {
                 let created = foodEaten.value(forKey: "created") as! Date
                 let components = calendar.dateComponents([.month, .day, .year], from: created)
                 
-                let day = components.day
-                let month = components.year
-                let year = components.year
+                day = components.day!
+                month = components.month!
+                year = components.year!
                 let dateString = dateFormatter.string(from: created)
                      
                      
                 if lastDay == 0 {
                     //this is first iteration
-                    lastDay = day!
-                    lastMonth = month!
-                    lastYear = year!
+                    lastDay = day
+                    lastMonth = month
+                    lastYear = year
                          
                 }
                      
                 if day != lastDay || month != lastMonth || year != lastYear {
                          
+                    let key = String(format: "%d_%d_%d", lastDay, lastMonth, lastYear)
+                    foodDayLookup[key] = dayCounter
+                    
                        //copy arrays
                     let copyOfFoodsEatenArray = foodsEatenArray
                  
@@ -271,9 +279,9 @@ class HomeViewController: UIViewController, ChartViewDelegate {
                        organizedFoodDays.append(currentFoodDay)
                          
                     //start a new day dict
-                    lastDay = day!
-                    lastMonth = month!
-                    lastYear = year!
+                    lastDay = day
+                    lastMonth = month
+                    lastYear = year
                     dayCounter += 1
                   
                     foodsEatenArray = []
@@ -296,6 +304,9 @@ class HomeViewController: UIViewController, ChartViewDelegate {
             //we gotta put the last day into the workout day array (if there are any sets from today)
             if foodsEatenArray.count > 0 {
                      
+                let key = String(format: "%d_%d_%d", day,month,year)
+                foodDayLookup[key] = dayCounter
+                
                 dayCounter += 1
                                
                 //copy arrays to day dict
@@ -308,26 +319,7 @@ class HomeViewController: UIViewController, ChartViewDelegate {
               
             }
                 
-            if organizedFoodDays.count < 8 && organizedFoodDays.count > 0 {
-                
-              
-                
-                let firstDay = organizedFoodDays[0].date
-                
-                
-                let daysToAdd = 8 - organizedFoodDays.count
-                for i in 1 ... daysToAdd  {
-                    
-                    let modifiedDate = calendar.date(byAdding: .day, value: -(i), to: firstDay)!
-                    let modifiedDateString = dateFormatter.string(from: modifiedDate)
-                    
-                    let blankFoodDay = FoodDay(date: modifiedDate, dateString: modifiedDateString, foodsEaten: [], totalDailyCalories: 8)
-                    organizedFoodDays.insert(blankFoodDay, at: 0)
-                    
-                }
-                
-                
-            }
+            
             
             
             //totalFoodDays = dayCounter
@@ -484,6 +476,67 @@ class HomeViewController: UIViewController, ChartViewDelegate {
         
     }
     
+    func organizeAndChartCaloriesConsumed( lastWeekFoodConsumed: [FoodDay]) {
+        
+        if lastWeekFoodConsumed.count > 0 {
+            
+            var daysOfThisWeekArray : [String] = []
+                 
+            var calendar = Calendar.current
+            calendar.timeZone = NSTimeZone.local
+            let today = calendar.startOfDay(for: Date())
+                 
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "EEE"
+            
+            var vals : [BarChartDataEntry] = []
+            var foodChartCustomColors : [NSUIColor] = []
+            
+            //loop from today to seven days ago
+            for i in 0 ... 7 {
+                     
+                let dateFrom = calendar.date(byAdding: .day, value: -(7-i), to: today)
+                let components = calendar.dateComponents([.month, .day, .year], from: dateFrom!)
+                     
+                let day = components.day!
+                let month = components.month!
+                let year = components.year!
+                     
+                let key = String(format: "%d_%d_%d", day, month, year)
+                let dateString = dateFormatter.string(from: dateFrom!)
+                     
+                daysOfThisWeekArray.append(key)
+                if i == 7 {
+                    foodChartXAxisLabels.append("Today")
+                    foodChartCustomColors.append(UIColor.darkGray)
+                } else {
+                    foodChartXAxisLabels.append(dateString)
+                    foodChartCustomColors.append(UIColor(red: 84.0/255.0, green: 199.0/255.0, blue: 252.0/255.0, alpha: 1.0))
+                }
+            
+                if foodDayLookup[key] != nil {
+                         
+                    let fooddayindex = foodDayLookup[key]
+                    let foodday = lastWeekFoodConsumed[fooddayindex!] as FoodDay
+                    let entry = BarChartDataEntry(x : Double(i), y: Double(foodday.totalDailyCalories))
+                    vals.append(entry)
+                        
+                } else {
+                    
+                    let entry = BarChartDataEntry(x : Double(i), y: Double(0))
+                    vals.append(entry)
+                    
+                }
+                     
+            }
+            let set = BarChartDataSet(entries: vals, label: "Total Daily Calories")
+            set.colors = foodChartCustomColors
+            calorieData = BarChartData(dataSet: set)
+          
+        }
+        
+    }
+    
     func organizeAndChartWorkoutWeek( lastWeekWorkouts: [WorkoutDay]) {
         
         if lastWeekWorkouts.count > 0 {
@@ -498,6 +551,8 @@ class HomeViewController: UIViewController, ChartViewDelegate {
             
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "EEE"
+            
+           
             
             //loop from today to seven days ago
             for i in 0 ... 7 {
@@ -550,8 +605,14 @@ class HomeViewController: UIViewController, ChartViewDelegate {
             var chartDataSets : [LineChartDataSet] = []
             //let data = LineChartData(dataSets : chartDataSets)
             
+            let setColors = [NSUIColor.init(red: 27/255, green: 38/255, blue: 44/255, alpha: 1.0),
+                             NSUIColor.init(red: 15/255, green: 76/255, blue: 117/255, alpha: 1.0),
+                             NSUIColor.init(red: 50/255, green: 130/255, blue: 184/255, alpha: 1.0),
+                             NSUIColor.init(red: 187/255, green: 226/255, blue: 250/255, alpha: 1.0)]
+            
             //now we know all of the exercises done this week we can create the graphs
-            for k in 0 ... weeklyExerciseNamesArray.count - 1 {
+            let wc = weeklyExerciseNamesArray.count - 1
+            for k in 0 ... wc {
                 
                 let exerciseName = weeklyExerciseNamesArray[k]
                 
@@ -578,6 +639,12 @@ class HomeViewController: UIViewController, ChartViewDelegate {
                 
                 let set = LineChartDataSet(entries: vals, label: exerciseName)
                 set.mode = .cubicBezier
+                if(k > 3){
+                    set.setColor(setColors[4 % k])
+                } else {
+                    set.setColor(setColors[k])
+                }
+                
                 set.circleRadius = 1
               
                 set.drawCircleHoleEnabled = false
