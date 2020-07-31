@@ -60,24 +60,43 @@ class HomeViewController: UIViewController, ChartViewDelegate {
         
         let foodDays = getLastWeekTotalCalories()
         
+        setupCalorieChart(foodDays: foodDays)
+        
         if foodDays.count > 0 {
-            setupCalorieChart(foodDays: foodDays)
+            
         }
         
         let workOutDays = getLastWeekWorkouts()
         
         if workOutDays.count > 0 {
             setupWorkoutChart( workoutDays: workOutDays)
+        } else {
+            
+           
+            let blankWorkoutDay = WorkoutDay(setTypes: ["Push Ups","Pull Ups","Crunches","Body Weight Squats"], setDict: ["Push Ups":0,"Pull Ups":0,"Crunches":0,"Body Weight Squats":0], setArray: [], dateString: "", date: Date())
+            let blankWorkouts = [blankWorkoutDay]
+            
+            var calendar = Calendar.current
+            calendar.timeZone = NSTimeZone.local
+            let components = calendar.dateComponents([.month, .day, .year], from: Date())
+            let day = components.day!
+            let month = components.month!
+            let year = components.year!
+            let key = String(format: "%d_%d_%d", day, month, year)
+            workoutDayLookup[key] = 0
+            
+            setupWorkoutChart(workoutDays: blankWorkouts)
+            
         }
         
-        print(foodDays.count)
+        /*print(foodDays.count)
         for i in 0 ... foodDays.count - 1 {
             
             let foodDay = foodDays[i]
             print(foodDay.date, foodDay.dateString, foodDay.totalDailyCalories)
             
         }
-        print(foodDayLookup)
+        print(foodDayLookup)*/
     }
 
     @IBAction func testButtonTouched(_ sender: Any) {
@@ -478,185 +497,177 @@ class HomeViewController: UIViewController, ChartViewDelegate {
     
     func organizeAndChartCaloriesConsumed( lastWeekFoodConsumed: [FoodDay]) {
         
-        if lastWeekFoodConsumed.count > 0 {
-            
-            var daysOfThisWeekArray : [String] = []
+        var daysOfThisWeekArray : [String] = []
+             
+        var calendar = Calendar.current
+        calendar.timeZone = NSTimeZone.local
+        let today = calendar.startOfDay(for: Date())
+             
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "EEE"
+        
+        var vals : [BarChartDataEntry] = []
+        var foodChartCustomColors : [NSUIColor] = []
+        
+        //loop from today to seven days ago
+        for i in 0 ... 7 {
                  
-            var calendar = Calendar.current
-            calendar.timeZone = NSTimeZone.local
-            let today = calendar.startOfDay(for: Date())
+            let dateFrom = calendar.date(byAdding: .day, value: -(7-i), to: today)
+            let components = calendar.dateComponents([.month, .day, .year], from: dateFrom!)
                  
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "EEE"
-            
-            var vals : [BarChartDataEntry] = []
-            var foodChartCustomColors : [NSUIColor] = []
-            
-            //loop from today to seven days ago
-            for i in 0 ... 7 {
-                     
-                let dateFrom = calendar.date(byAdding: .day, value: -(7-i), to: today)
-                let components = calendar.dateComponents([.month, .day, .year], from: dateFrom!)
-                     
-                let day = components.day!
-                let month = components.month!
-                let year = components.year!
-                     
-                let key = String(format: "%d_%d_%d", day, month, year)
-                let dateString = dateFormatter.string(from: dateFrom!)
-                     
-                daysOfThisWeekArray.append(key)
-                if i == 7 {
-                    foodChartXAxisLabels.append("Today")
-                    foodChartCustomColors.append(UIColor.darkGray)
-                } else {
-                    foodChartXAxisLabels.append(dateString)
-                    foodChartCustomColors.append(UIColor(red: 84.0/255.0, green: 199.0/255.0, blue: 252.0/255.0, alpha: 1.0))
-                }
-            
-                if foodDayLookup[key] != nil {
-                         
-                    let fooddayindex = foodDayLookup[key]
-                    let foodday = lastWeekFoodConsumed[fooddayindex!] as FoodDay
-                    let entry = BarChartDataEntry(x : Double(i), y: Double(foodday.totalDailyCalories))
-                    vals.append(entry)
-                        
-                } else {
-                    
-                    let entry = BarChartDataEntry(x : Double(i), y: Double(0))
-                    vals.append(entry)
-                    
-                }
-                     
+            let day = components.day!
+            let month = components.month!
+            let year = components.year!
+                 
+            let key = String(format: "%d_%d_%d", day, month, year)
+            let dateString = dateFormatter.string(from: dateFrom!)
+                 
+            daysOfThisWeekArray.append(key)
+            if i == 7 {
+                foodChartXAxisLabels.append("Today")
+                foodChartCustomColors.append(UIColor.darkGray)
+            } else {
+                foodChartXAxisLabels.append(dateString)
+                foodChartCustomColors.append(UIColor(red: 84.0/255.0, green: 199.0/255.0, blue: 252.0/255.0, alpha: 1.0))
             }
-            let set = BarChartDataSet(entries: vals, label: "Total Daily Calories")
-            set.colors = foodChartCustomColors
-            calorieData = BarChartData(dataSet: set)
-          
+        
+            if foodDayLookup[key] != nil {
+                     
+                let fooddayindex = foodDayLookup[key]
+                let foodday = lastWeekFoodConsumed[fooddayindex!] as FoodDay
+                let entry = BarChartDataEntry(x : Double(i), y: Double(foodday.totalDailyCalories))
+                vals.append(entry)
+                    
+            } else {
+                
+                let entry = BarChartDataEntry(x : Double(i), y: Double(0))
+                vals.append(entry)
+                
+            }
+                 
         }
+        let set = BarChartDataSet(entries: vals, label: "Total Daily Calories")
+        set.colors = foodChartCustomColors
+        calorieData = BarChartData(dataSet: set)
         
     }
     
     func organizeAndChartWorkoutWeek( lastWeekWorkouts: [WorkoutDay]) {
         
-        if lastWeekWorkouts.count > 0 {
-            
-            var weeklyExerciseTotals : [String:Int] = [:]
-            var weeklyExerciseNamesArray : [String] = []
-            var daysOfThisWeekArray : [String] = []
-            
-            var calendar = Calendar.current
-            calendar.timeZone = NSTimeZone.local
-            let today = calendar.startOfDay(for: Date())
-            
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "EEE"
-            
-           
-            
-            //loop from today to seven days ago
-            for i in 0 ... 7 {
-                
-                let dateFrom = calendar.date(byAdding: .day, value: -(7-i), to: today)
-                let components = calendar.dateComponents([.month, .day, .year], from: dateFrom!)
-                
-                
-                let day = components.day!
-                let month = components.month!
-                let year = components.year!
-                
-                let key = String(format: "%d_%d_%d", day, month, year)
-                let dateString = dateFormatter.string(from: dateFrom!)
-                
-                daysOfThisWeekArray.append(key)
-                if i == 7 {
-                    workoutChartXAxisLabels.append("Today")
-                } else {
-                    workoutChartXAxisLabels.append(dateString)
-                }
-       
-                
-                
-                if workoutDayLookup[key] != nil {
-                    
-                    let workoutIndex = workoutDayLookup[key]
-                    let workoutday = lastWeekWorkouts[workoutIndex!] as WorkoutDay
-                    let exerciseNames = workoutday.setTypes
-                    
-                    for j in 0 ... exerciseNames.count - 1 {
-                        
-                        let exerciseName = exerciseNames[j] as String
-                        let dailyTotal = workoutday.setDict[exerciseName]
-                        
-                        if weeklyExerciseTotals[exerciseName] != nil {
-                            weeklyExerciseTotals[exerciseName]! += dailyTotal!
-                        } else {
-                            weeklyExerciseTotals[exerciseName] = dailyTotal
-                            weeklyExerciseNamesArray.append(exerciseName)
-                        }
-                        
-                        
-                    }
-                  
-                }
-                
-            }
-            
-            var chartDataSets : [LineChartDataSet] = []
-            //let data = LineChartData(dataSets : chartDataSets)
-            
-            let setColors = [NSUIColor.init(red: 27/255, green: 38/255, blue: 44/255, alpha: 1.0),
-                             NSUIColor.init(red: 15/255, green: 76/255, blue: 117/255, alpha: 1.0),
-                             NSUIColor.init(red: 50/255, green: 130/255, blue: 184/255, alpha: 1.0),
-                             NSUIColor.init(red: 187/255, green: 226/255, blue: 250/255, alpha: 1.0)]
-            
-            //now we know all of the exercises done this week we can create the graphs
-            let wc = weeklyExerciseNamesArray.count - 1
-            for k in 0 ... wc {
-                
-                let exerciseName = weeklyExerciseNamesArray[k]
-                
-                var vals : [ChartDataEntry] = []
-                
-                for l in 0 ... daysOfThisWeekArray.count - 1 {
-                    
-                    let key = daysOfThisWeekArray[l]
-                    
-                    if workoutDayLookup[key] != nil {
-                        
-                        let workoutIndex = workoutDayLookup[key]
-                        let workoutday = lastWeekWorkouts[workoutIndex!] as WorkoutDay
-                        let dailyTotal = (workoutday.setDict[exerciseName] ?? 0) as Int
-                        let entry = ChartDataEntry(x : Double(l), y: Double(dailyTotal))
-                        vals.append(entry)
-                        
-                    } else {
-                        let entry = ChartDataEntry(x : Double(l), y: Double(0))
-                        vals.append(entry)
-                    }
-                    
-                }
-                
-                let set = LineChartDataSet(entries: vals, label: exerciseName)
-                set.mode = .cubicBezier
-                if(k > 3){
-                    set.setColor(setColors[4 % k])
-                } else {
-                    set.setColor(setColors[k])
-                }
-                
-                set.circleRadius = 1
-              
-                set.drawCircleHoleEnabled = false
-                chartDataSets.append(set)
-                
-            }
-            
-            workoutChartData = LineChartData(dataSets: chartDataSets)
-  
-        }
         
-      
+        
+        var weeklyExerciseTotals : [String:Int] = [:]
+        var weeklyExerciseNamesArray : [String] = []
+        var daysOfThisWeekArray : [String] = []
+             
+        var calendar = Calendar.current
+        calendar.timeZone = NSTimeZone.local
+        let today = calendar.startOfDay(for: Date())
+             
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "EEE"
+             
+            
+             
+             //loop from today to seven days ago
+             for i in 0 ... 7 {
+                 
+                 let dateFrom = calendar.date(byAdding: .day, value: -(7-i), to: today)
+                 let components = calendar.dateComponents([.month, .day, .year], from: dateFrom!)
+                 
+                 
+                 let day = components.day!
+                 let month = components.month!
+                 let year = components.year!
+                 
+                 let key = String(format: "%d_%d_%d", day, month, year)
+                 let dateString = dateFormatter.string(from: dateFrom!)
+                 
+                 daysOfThisWeekArray.append(key)
+                 if i == 7 {
+                     workoutChartXAxisLabels.append("Today")
+                 } else {
+                     workoutChartXAxisLabels.append(dateString)
+                 }
+        
+                 
+                 
+                 if workoutDayLookup[key] != nil {
+                     
+                     let workoutIndex = workoutDayLookup[key]
+                     let workoutday = lastWeekWorkouts[workoutIndex!] as WorkoutDay
+                     let exerciseNames = workoutday.setTypes
+                     
+                     for j in 0 ... exerciseNames.count - 1 {
+                         
+                         let exerciseName = exerciseNames[j] as String
+                         let dailyTotal = workoutday.setDict[exerciseName]
+                         
+                         if weeklyExerciseTotals[exerciseName] != nil {
+                             weeklyExerciseTotals[exerciseName]! += dailyTotal!
+                         } else {
+                             weeklyExerciseTotals[exerciseName] = dailyTotal
+                             weeklyExerciseNamesArray.append(exerciseName)
+                         }
+                         
+                         
+                     }
+                   
+                 }
+                 
+             }
+             
+             var chartDataSets : [LineChartDataSet] = []
+             //let data = LineChartData(dataSets : chartDataSets)
+             
+             let setColors = [NSUIColor.init(red: 27/255, green: 38/255, blue: 44/255, alpha: 1.0),
+                              NSUIColor.init(red: 15/255, green: 76/255, blue: 117/255, alpha: 1.0),
+                              NSUIColor.init(red: 50/255, green: 130/255, blue: 184/255, alpha: 1.0),
+                              NSUIColor.init(red: 187/255, green: 226/255, blue: 250/255, alpha: 1.0)]
+             
+             //now we know all of the exercises done this week we can create the graphs
+             let wc = weeklyExerciseNamesArray.count - 1
+             for k in 0 ... wc {
+                 
+                 let exerciseName = weeklyExerciseNamesArray[k]
+                 
+                 var vals : [ChartDataEntry] = []
+                 
+                 for l in 0 ... daysOfThisWeekArray.count - 1 {
+                     
+                     let key = daysOfThisWeekArray[l]
+                     
+                     if workoutDayLookup[key] != nil {
+                         
+                         let workoutIndex = workoutDayLookup[key]
+                         let workoutday = lastWeekWorkouts[workoutIndex!] as WorkoutDay
+                         let dailyTotal = (workoutday.setDict[exerciseName] ?? 0) as Int
+                         let entry = ChartDataEntry(x : Double(l), y: Double(dailyTotal))
+                         vals.append(entry)
+                         
+                     } else {
+                         let entry = ChartDataEntry(x : Double(l), y: Double(0))
+                         vals.append(entry)
+                     }
+                     
+                 }
+                 
+                 let set = LineChartDataSet(entries: vals, label: exerciseName)
+                 set.mode = .cubicBezier
+                 if(k > 3){
+                     set.setColor(setColors[4 % k])
+                 } else {
+                     set.setColor(setColors[k])
+                 }
+                 
+                 set.circleRadius = 1
+               
+                 set.drawCircleHoleEnabled = false
+                 chartDataSets.append(set)
+                 
+             }
+             
+             workoutChartData = LineChartData(dataSets: chartDataSets)
         
     }
      

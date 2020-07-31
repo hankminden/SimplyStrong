@@ -48,55 +48,13 @@ class AddSetViewController: UIViewController, UITableViewDataSource, UITableView
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        guard let appDelegate =
-          UIApplication.shared.delegate as? AppDelegate else {
-            return
-        }
-        
-        let managedContext =
-          appDelegate.persistentContainer.viewContext
-        
-        let fetchRequest =
-          NSFetchRequest<NSManagedObject>(entityName: "Exercises")
-        
-        do {
-          exercises = try managedContext.fetch(fetchRequest)
-        } catch let error as NSError {
-          print("Could not fetch. \(error), \(error.userInfo)")
-        }
-        
-        let fetchRequest2 =
-        NSFetchRequest<NSManagedObject>(entityName: "Sets")
-        let sort = NSSortDescriptor(key: "created", ascending: true)
-        fetchRequest2.sortDescriptors = [sort]
-        
-        do {
-            
-            workoutSets = try managedContext.fetch(fetchRequest2)
-        
-            organizeSetsIntoSections(workoutSets: workoutSets)
-            self.tableView.reloadData()
-        } catch let error as NSError {
-          print("Could not fetch. \(error), \(error.userInfo)")
-        }
-        
         tableView.delegate = self
         tableView.dataSource = self
         
-       
-        if(exercises.count > 0){
-            let exercise = exercises[0]
-           
-            selectedExercise = exercise
-            selectWorkoutName(exercise: exercise)
-        } else {
-            pickWorkoutButton.setTitle("", for: UIControl.State.normal)
-        }
+        loadExercises()
+        loadSets()
         
         
-
-        
-     
         pickWorkoutButton.layer.cornerRadius = 18
         pickWorkoutButton.layer.borderWidth = 3
         pickWorkoutButton.layer.borderColor = borderGray.cgColor
@@ -602,6 +560,94 @@ class AddSetViewController: UIViewController, UITableViewDataSource, UITableView
        
         
         totalDaysOfWorkouts = dayCounter
+        
+        
+    }
+    
+    func loadExercises() -> Void {
+        
+        guard let appDelegate =
+          UIApplication.shared.delegate as? AppDelegate else {
+            return
+        }
+        
+        let managedContext =
+          appDelegate.persistentContainer.viewContext
+        
+        let fetchRequest =
+          NSFetchRequest<NSManagedObject>(entityName: "Exercises")
+        
+        do {
+            exercises = try managedContext.fetch(fetchRequest)
+            
+            if(exercises.count > 0){
+                let exercise = exercises[0]
+                selectedExercise = exercise
+                selectWorkoutName(exercise: exercise)
+            } else {
+                preloadDefaultExercises()
+            }
+            
+            
+        } catch let error as NSError {
+          print("Could not fetch. \(error), \(error.userInfo)")
+        }
+        
+    }
+    
+    func loadSets() -> Void {
+        
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+            
+        let managedContext = appDelegate.persistentContainer.viewContext
+            
+        let fetchRequest2 = NSFetchRequest<NSManagedObject>(entityName: "Sets")
+        let sort = NSSortDescriptor(key: "created", ascending: true)
+        fetchRequest2.sortDescriptors = [sort]
+            
+        do {
+                
+            workoutSets = try managedContext.fetch(fetchRequest2)
+            
+            organizeSetsIntoSections(workoutSets: workoutSets)
+            self.tableView.reloadData()
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+        }
+        
+    }
+    
+    func preloadDefaultExercises() -> Void {
+        
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+             return
+         }
+         
+        let managedContext = appDelegate.persistentContainer.viewContext
+        
+        let defaultExerciseNames = ["Pull Ups","Push Ups","Crunches","Body Weight Squats"]
+        
+        let entity = NSEntityDescription.entity(forEntityName: "Exercises", in: managedContext)!
+        let now = Date()
+        
+        for i in 0 ... defaultExerciseNames.count - 1 {
+            
+            let exerciseName = defaultExerciseNames[i]
+            
+            let exercise = NSManagedObject(entity: entity, insertInto: managedContext)
+          
+            exercise.setValue(now, forKeyPath: "created")
+            exercise.setValue(exerciseName, forKeyPath: "name")
+                       
+            do {
+                try managedContext.save()
+                loadExercises()
+                
+            } catch let error as NSError {
+                print("Could not save. \(error), \(error.userInfo)")
+            }
+            
+        }
         
         
     }
