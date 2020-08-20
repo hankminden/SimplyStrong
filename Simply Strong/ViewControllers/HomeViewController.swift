@@ -42,13 +42,13 @@ class HomeViewController: UIViewController, ChartViewDelegate {
         calorieChartContainer.layer.cornerRadius = 18
         calorieChartContainer.layer.borderWidth = 3
         calorieChartContainer.layer.borderColor = borderGray.cgColor
-        calorieChartContainer.backgroundColor = .white
+        //calorieChartContainer.backgroundColor = .white
         calorieChartContainer.clipsToBounds = true
         
         workoutViewContainer.layer.cornerRadius = 18
         workoutViewContainer.layer.borderWidth = 3
         workoutViewContainer.layer.borderColor = borderGray.cgColor
-        workoutViewContainer.backgroundColor = .white
+        //workoutViewContainer.backgroundColor = .white
         workoutViewContainer.clipsToBounds = true
         
         
@@ -89,14 +89,7 @@ class HomeViewController: UIViewController, ChartViewDelegate {
             
         }
         
-        /*print(foodDays.count)
-        for i in 0 ... foodDays.count - 1 {
-            
-            let foodDay = foodDays[i]
-            print(foodDay.date, foodDay.dateString, foodDay.totalDailyCalories)
-            
-        }
-        print(foodDayLookup)*/
+
     }
 
     @IBAction func testButtonTouched(_ sender: Any) {
@@ -171,8 +164,12 @@ class HomeViewController: UIViewController, ChartViewDelegate {
         
         organizeAndChartWorkoutWeek( lastWeekWorkouts: workoutDays)
         
+        workoutLineChart.xAxis.labelPosition = .bottom
+        workoutLineChart.xAxis.labelFont = UIFont(name: "Futura", size: 8)!
         workoutLineChart.xAxis.valueFormatter = IndexAxisValueFormatter(values:workoutChartXAxisLabels)
         workoutLineChart.data = workoutChartData
+        
+      
         
     }
     
@@ -655,7 +652,7 @@ class HomeViewController: UIViewController, ChartViewDelegate {
                  let set = LineChartDataSet(entries: vals, label: exerciseName)
                  set.mode = .cubicBezier
                  if(k > 3){
-                     set.setColor(setColors[4 % k])
+                     set.setColor(setColors[k % 4])
                  } else {
                      set.setColor(setColors[k])
                  }
