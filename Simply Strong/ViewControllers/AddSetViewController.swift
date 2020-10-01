@@ -20,15 +20,17 @@ struct WorkoutDay {
 class AddSetViewController: UIViewController, UITableViewDataSource, UITableViewDelegate  {
 
     weak var pvc : MainPageViewController?
-    //weak var mainVC : ExerciseTabContainerViewController?
-   
+
+    var needsRefresh : Bool = false
+    
     @IBOutlet var pickWorkoutButton: UIButton!
-    @IBOutlet var addSetButton: UIButton!
+    
+    @IBOutlet weak var addSetButton: LogButton!
+    @IBOutlet weak var addSetButtonBacking: UIView!
     @IBOutlet var tableView: UITableView!
     @IBOutlet var repsDisplayLabel: UILabel!
     
     @IBOutlet var homeButton: UIButton!
-    
     
     var repsCountValue: Int = 0
 
@@ -54,11 +56,9 @@ class AddSetViewController: UIViewController, UITableViewDataSource, UITableView
         loadExercises()
         loadSets()
         
-        
         pickWorkoutButton.layer.cornerRadius = 18
         pickWorkoutButton.layer.borderWidth = 3
         pickWorkoutButton.layer.borderColor = borderGray.cgColor
-        
         
         repsDisplayLabel.layer.cornerRadius = 18
         repsDisplayLabel.layer.borderWidth = 3
@@ -68,7 +68,28 @@ class AddSetViewController: UIViewController, UITableViewDataSource, UITableView
         tableView.layer.borderWidth = 3
         tableView.layer.borderColor = borderGray.cgColor
         
-        addSetButton.layer.cornerRadius = 18
+        addSetButtonBacking.layer.cornerRadius = 18
+        addSetButtonBacking.clipsToBounds = true
+        
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.frame = addSetButtonBacking.bounds
+        gradientLayer.colors = [UIColor.init(red: 0/255, green: 87/255, blue: 255/255, alpha: 1).cgColor,
+                                UIColor.init(red: 84/255, green: 199/255, blue: 252/255, alpha: 1).cgColor]
+        addSetButtonBacking.layer.insertSublayer(gradientLayer, at: 0)
+        
+        addSetButton.initParticleLayer(ptype: 0)
+        addSetButton.isEnabled = false
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if(needsRefresh){
+            loadExercises()
+            loadSets()
+            needsRefresh = false
+        }
         
     }
     
@@ -203,6 +224,8 @@ class AddSetViewController: UIViewController, UITableViewDataSource, UITableView
             
              repCache[exerciseName] = selectedSet.value(forKey: "noReps") as? Int
              selectWorkoutName(exercise: exercise)
+            
+            
         }
         
 
@@ -362,6 +385,10 @@ class AddSetViewController: UIViewController, UITableViewDataSource, UITableView
         let selectedRepName = selectedExercise?.value(forKey: "name") as! String
         repCache[selectedRepName] = repsCountValue
         
+        if repsCountValue > 0 {
+            addSetButton.isEnabled = true
+        }
+        
     }
     
     @IBAction func repCountDecreaseTouched(_ sender: Any) {
@@ -371,6 +398,11 @@ class AddSetViewController: UIViewController, UITableViewDataSource, UITableView
             repsDisplayLabel.text = String(format: "%d",repsCountValue)
             let selectedRepName = selectedExercise?.value(forKey: "name") as! String
             repCache[selectedRepName] = repsCountValue
+            
+            if repsCountValue == 0 {
+                addSetButton.isEnabled = false
+            }
+            
         }
         
     }
@@ -437,9 +469,6 @@ class AddSetViewController: UIViewController, UITableViewDataSource, UITableView
             }
         }
         
-        
-        
-
     }
     
     
@@ -455,6 +484,10 @@ class AddSetViewController: UIViewController, UITableViewDataSource, UITableView
             
             repsCountValue = repCache[selectedRepName]!
             repsDisplayLabel.text = String(format: "%d", repsCountValue)
+            
+            if repsCountValue > 0 {
+                addSetButton.isEnabled = true
+            }
             
         }
         
@@ -728,6 +761,8 @@ class AddSetViewController: UIViewController, UITableViewDataSource, UITableView
         
     }
     
+    
+
     
 }
 

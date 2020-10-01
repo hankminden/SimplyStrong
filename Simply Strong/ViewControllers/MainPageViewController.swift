@@ -63,6 +63,15 @@ class MainPageViewController: UIPageViewController {
    
     }
     
+    func setAllViewsNeedRefresh() {
+        
+        let logFoodVC = pages[0] as! LogFoodViewController
+        let addSetVC = pages[2] as! AddSetViewController
+        
+        logFoodVC.needsRefresh = true
+        addSetVC.needsRefresh = true
+    }
+    
 
 
 }

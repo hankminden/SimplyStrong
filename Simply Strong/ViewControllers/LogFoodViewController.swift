@@ -20,7 +20,7 @@ struct FoodDay {
 class LogFoodViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource, SuggestionManagerDelegate {
 
     
-    
+    var needsRefresh : Bool = false
 
     weak var pvc : MainPageViewController?
     //weak var mainVC : LogFoodTabContainerViewController?
@@ -43,7 +43,9 @@ class LogFoodViewController: UIViewController, UIPickerViewDataSource, UIPickerV
     @IBOutlet var topSupportString: NSLayoutConstraint!
     
     @IBOutlet var caloriePicker: UIPickerView!
-    @IBOutlet var logFoodButton: UIButton!
+    
+    @IBOutlet weak var logViewButtonBacking: UIView!
+    @IBOutlet weak var logFoodButton: LogButton!
     @IBOutlet var foodTextField: UITextField!
     @IBOutlet var calorieDisplay: UILabel!
     
@@ -73,36 +75,61 @@ class LogFoodViewController: UIViewController, UIPickerViewDataSource, UIPickerV
         foodTextField.layer.borderWidth = 3
         foodTextField.layer.borderColor = borderGray.cgColor
         
-        logFoodButton.layer.cornerRadius = 18
+        logViewButtonBacking.layer.cornerRadius = 18
+        logViewButtonBacking.clipsToBounds = true
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.frame = logViewButtonBacking.bounds
+        gradientLayer.colors = [UIColor.init(red: 0/255, green: 87/255, blue: 255/255, alpha: 1).cgColor,
+                                UIColor.init(red: 84/255, green: 199/255, blue: 252/255, alpha: 1).cgColor]
+        logViewButtonBacking.layer.insertSublayer(gradientLayer, at: 0)
+        
+        logFoodButton.initParticleLayer(ptype: 1)
+        logFoodButton.isEnabled = false
         
         logFoodTable.layer.cornerRadius = 18
         logFoodTable.layer.borderWidth = 3
         logFoodTable.layer.borderColor = borderGray.cgColor
         
         //load foods eaten
+        loadFoodsEaten()
+
         
-        guard let appDelegate =
-            UIApplication.shared.delegate as? AppDelegate else {
-            return
-        }
-                       
-        let managedContext = appDelegate.persistentContainer.viewContext
-                       
-        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "FoodsConsumed" )
-        let sort = NSSortDescriptor(key: "created", ascending: true)
-        fetchRequest.sortDescriptors = [sort]
-       
-        do {
-            
-            foodsEaten = try managedContext.fetch(fetchRequest)
-            organizeDailyFoodsIntoSections(foodsEaten: foodsEaten)
-            logFoodTable.reloadData()
-            
-        } catch let error as NSError {
-            print("Could not fetch. \(error), \(error.userInfo)")
-        }
+
         
-        //populateDBForTesting()
+    }
+    
+    func loadFoodsEaten () {
+        
+         guard let appDelegate =
+             UIApplication.shared.delegate as? AppDelegate else {
+             return
+         }
+                        
+         let managedContext = appDelegate.persistentContainer.viewContext
+                        
+         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "FoodsConsumed" )
+         let sort = NSSortDescriptor(key: "created", ascending: true)
+         fetchRequest.sortDescriptors = [sort]
+        
+         do {
+             
+             foodsEaten = try managedContext.fetch(fetchRequest)
+             organizeDailyFoodsIntoSections(foodsEaten: foodsEaten)
+             logFoodTable.reloadData()
+             
+         } catch let error as NSError {
+             print("Could not fetch. \(error), \(error.userInfo)")
+         }
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if(needsRefresh){
+            loadFoodsEaten()
+            needsRefresh = false
+        }
         
     }
     
@@ -113,15 +140,18 @@ class LogFoodViewController: UIViewController, UIPickerViewDataSource, UIPickerV
         
     }
     
-    @IBAction func doneTouched(_ sender: Any) {
+    @IBAction func savedFoodsTouched(_ sender: Any) {
         
-        /*self.mainVC?.doShowModal = false
-         self.dismiss(animated: true) {
-             
-             self.mainVC?.goBackHome()
-         }*/
+          let storyboard = UIStoryboard(name: "Main", bundle: nil)
+          let savedFoodsVC = storyboard.instantiateViewController(withIdentifier: "savedFoodsVC") as! SavedFoodsViewController
+      
+          self.present(savedFoodsVC, animated: true) {
+              
+          }
         
     }
+    
+
     
     @IBAction func logFoodTouched(_ sender: Any) {
         
@@ -396,6 +426,8 @@ class LogFoodViewController: UIViewController, UIPickerViewDataSource, UIPickerV
             selectedFood = food
             setPickerToCalorieValue(value: calories)
             foodTextField.text = foodName
+            
+            logFoodButton.isEnabled = true
         }
         
     }
@@ -579,6 +611,7 @@ class LogFoodViewController: UIViewController, UIPickerViewDataSource, UIPickerV
             foodsEaten.append(newfoodConsumed)
             organizeDailyFoodsIntoSections(foodsEaten: foodsEaten)
             logFoodTable.reloadData()
+            scrollToBottom()
             
         } catch let error as NSError {
             print("Could not save. \(error), \(error.userInfo)")
@@ -588,7 +621,13 @@ class LogFoodViewController: UIViewController, UIPickerViewDataSource, UIPickerV
     
     func textFieldDidChangeSelection(_ textField: UITextField) {
         
-        suggestionTableMgr?.searchForFood(searchTerm: textField.text!)
+        if textField.text != "" {
+            suggestionTableMgr?.searchForFood(searchTerm: textField.text!)
+            logFoodButton.isEnabled = true
+        } else {
+            logFoodButton.isEnabled = false
+        }
+        
         
     }
     
@@ -725,5 +764,21 @@ class LogFoodViewController: UIViewController, UIPickerViewDataSource, UIPickerV
         
     }
 
+    func scrollToBottom(){
+        
+        if totalFoodDays > 0 {
+            DispatchQueue.main.async {
+                let lastSection = self.totalFoodDays - 1
+                let lastFoodDay = self.organizedFoodDays[lastSection]
+                let lastRowIndex = lastFoodDay.foodsEaten.count - 1
+                let indexPath = IndexPath(row: lastRowIndex, section: lastSection)
+                
+         
+                
+                self.logFoodTable.scrollToRow(at: indexPath, at: .bottom, animated: true)
+            }
+        }
+        
+    }
     
 }

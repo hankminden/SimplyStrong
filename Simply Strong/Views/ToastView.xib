@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.3" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ToastView" customModule="Simply_Strong" customModuleProvider="target">
+            <connections>
+                <outlet property="bodyText" destination="L7p-TM-6cW" id="sDS-1W-cjx"/>
+                <outlet property="contentView" destination="iN0-l3-epB" id="Qac-22-BHi"/>
+                <outlet property="titleLabel" destination="kgi-QH-pPu" id="nEb-Nr-OgJ"/>
+                <outlet property="toastContainer" destination="Qbo-Ei-RGJ" id="4rP-Ud-N8D"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="80"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qbo-Ei-RGJ">
+                    <rect key="frame" x="14" y="0.0" width="386" height="80"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kgi-QH-pPu">
+                            <rect key="frame" x="64" y="8" width="312" height="18"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="18" id="xj4-eW-uah"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="16"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemGray2Color" red="0.68235294120000001" green="0.68235294120000001" blue="0.69803921570000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstItem="kgi-QH-pPu" firstAttribute="top" secondItem="Qbo-Ei-RGJ" secondAttribute="top" constant="8" id="hA3-eg-SrO"/>
+                        <constraint firstAttribute="trailing" secondItem="kgi-QH-pPu" secondAttribute="trailing" constant="10" id="j9R-WI-a3i"/>
+                    </constraints>
+                </view>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="alert" translatesAutoresizingMaskIntoConstraints="NO" id="EGg-yF-gHo">
+                    <rect key="frame" x="24" y="18" width="44" height="44"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="44" id="F9f-NE-bWw"/>
+                        <constraint firstAttribute="width" secondItem="EGg-yF-gHo" secondAttribute="height" multiplier="1:1" id="lDp-uh-FjK"/>
+                    </constraints>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L7p-TM-6cW">
+                    <rect key="frame" x="78" y="26" width="312" height="46"/>
+                    <string key="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip</string>
+                    <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="11"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="kgi-QH-pPu" firstAttribute="leading" secondItem="EGg-yF-gHo" secondAttribute="trailing" constant="10" id="2qZ-Io-JPc"/>
+                <constraint firstItem="L7p-TM-6cW" firstAttribute="leading" secondItem="kgi-QH-pPu" secondAttribute="leading" id="9e4-Za-6I6"/>
+                <constraint firstItem="Qbo-Ei-RGJ" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="14" id="B9C-rP-xal"/>
+                <constraint firstItem="L7p-TM-6cW" firstAttribute="bottom" secondItem="Qbo-Ei-RGJ" secondAttribute="bottom" constant="-8" id="IVb-zO-Qwb"/>
+                <constraint firstItem="Qbo-Ei-RGJ" firstAttribute="centerX" secondItem="vUN-kp-3ea" secondAttribute="centerX" id="IaT-Cf-8he"/>
+                <constraint firstItem="EGg-yF-gHo" firstAttribute="top" secondItem="Qbo-Ei-RGJ" secondAttribute="top" constant="18" id="Qk4-Q2-gfM"/>
+                <constraint firstAttribute="top" secondItem="Qbo-Ei-RGJ" secondAttribute="top" id="ZY0-3B-UxF"/>
+                <constraint firstItem="Qbo-Ei-RGJ" firstAttribute="leading" secondItem="EGg-yF-gHo" secondAttribute="leading" constant="-10" id="chC-Qn-4OV"/>
+                <constraint firstItem="L7p-TM-6cW" firstAttribute="trailing" secondItem="kgi-QH-pPu" secondAttribute="trailing" id="omk-Ge-mNa"/>
+                <constraint firstItem="L7p-TM-6cW" firstAttribute="top" secondItem="kgi-QH-pPu" secondAttribute="bottom" id="p3w-Dj-uJY"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="Qbo-Ei-RGJ" secondAttribute="bottom" id="vcb-rP-IeC"/>
+            </constraints>
+            <nil key="simulatedTopBarMetrics"/>
+            <nil key="simulatedBottomBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <point key="canvasLocation" x="204.34782608695653" y="-115.84821428571428"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="alert" width="128" height="128"/>
+    </resources>
+</document>

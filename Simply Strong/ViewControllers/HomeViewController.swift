@@ -58,21 +58,23 @@ class HomeViewController: UIViewController, ChartViewDelegate {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
+        setupAllViews()
+        
+
+    }
+    
+    func setupAllViews() {
+        
         let foodDays = getLastWeekTotalCalories()
         
         setupCalorieChart(foodDays: foodDays)
-        
-        if foodDays.count > 0 {
-            
-        }
-        
+                
         let workOutDays = getLastWeekWorkouts()
         
         if workOutDays.count > 0 {
             setupWorkoutChart( workoutDays: workOutDays)
         } else {
             
-           
             let blankWorkoutDay = WorkoutDay(setTypes: ["Push Ups","Pull Ups","Crunches","Body Weight Squats"], setDict: ["Push Ups":0,"Pull Ups":0,"Crunches":0,"Body Weight Squats":0], setArray: [], dateString: "", date: Date())
             let blankWorkouts = [blankWorkoutDay]
             
@@ -84,12 +86,10 @@ class HomeViewController: UIViewController, ChartViewDelegate {
             let year = components.year!
             let key = String(format: "%d_%d_%d", day, month, year)
             workoutDayLookup[key] = 0
-            
             setupWorkoutChart(workoutDays: blankWorkouts)
             
         }
         
-
     }
 
     @IBAction func testButtonTouched(_ sender: Any) {
@@ -169,7 +169,7 @@ class HomeViewController: UIViewController, ChartViewDelegate {
         workoutLineChart.xAxis.valueFormatter = IndexAxisValueFormatter(values:workoutChartXAxisLabels)
         workoutLineChart.data = workoutChartData
         
-      
+        workoutLineChart.clipsToBounds = false
         
     }
     
@@ -208,7 +208,7 @@ class HomeViewController: UIViewController, ChartViewDelegate {
         calorieBarChart.animate(yAxisDuration: 1 , easingOption: ChartEasingOption.linear)
         calorieBarChart.data = calorieData
         
-       
+        calorieBarChart.clipsToBounds = false
         
     }
     
@@ -669,4 +669,16 @@ class HomeViewController: UIViewController, ChartViewDelegate {
     }
      
     
+    @IBAction func settingsTouched(_ sender: Any) {
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let settingsVC = storyboard.instantiateViewController(withIdentifier: "settingsVC") as! SettingsViewController
+        settingsVC.pvc = pvc
+        settingsVC.homevc = self
+        
+        self.present(settingsVC, animated: true) {
+              
+        }
+        
+    }
 }
