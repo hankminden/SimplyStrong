@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7F3F164D2540927300533B26 /* IAPManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F3F164C2540927300533B26 /* IAPManager.swift */; };
+		7F3F1652254093CD00533B26 /* SimplyStrongProducts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F3F1651254093CC00533B26 /* SimplyStrongProducts.swift */; };
 		7F4FC3C525117686007D2C19 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F4FC3C425117686007D2C19 /* SettingsViewController.swift */; };
 		7F4FC3C725117AF1007D2C19 /* SettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F4FC3C625117AF1007D2C19 /* SettingsTableViewCell.swift */; };
 		7F587E8B24C082840022CDAE /* Simply_FitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F587E8A24C082840022CDAE /* Simply_FitTests.swift */; };
@@ -14,6 +16,9 @@
 		7FAD5D3F252638DE00588813 /* SavedFoodsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FAD5D3E252638DE00588813 /* SavedFoodsViewController.swift */; };
 		7FAD5D412526399600588813 /* NSPersistentContainer+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FAD5D402526399600588813 /* NSPersistentContainer+extension.swift */; };
 		7FAD5D5725265B8300588813 /* FoodTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FAD5D5625265B8300588813 /* FoodTableViewCell.swift */; };
+		7FD90AC3253A2CCE00167548 /* StrongAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FD90AC2253A2CCE00167548 /* StrongAlertView.swift */; };
+		7FD90AC8253A2CFA00167548 /* StrongAlertView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7FD90AC7253A2CFA00167548 /* StrongAlertView.xib */; };
+		7FD90AD0253DF1DE00167548 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FD90ACF253DF1DE00167548 /* StoreKit.framework */; };
 		7FF0874B252661A500F56D2E /* LogButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FF0874A252661A500F56D2E /* LogButton.swift */; };
 		7FF0874D252661F900F56D2E /* ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FF0874C252661F900F56D2E /* ToastView.swift */; };
 		7FF0874F2526620300F56D2E /* ToastView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7FF0874E2526620300F56D2E /* ToastView.xib */; };
@@ -63,6 +68,8 @@
 		2CB884AB865282CDC4F90EA2 /* Pods-Simply Strong.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Simply Strong.debug.xcconfig"; path = "Target Support Files/Pods-Simply Strong/Pods-Simply Strong.debug.xcconfig"; sourceTree = "<group>"; };
 		7D1C428D895D8D2B67CB6AF8 /* Pods-Simply Strong.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Simply Strong.release.xcconfig"; path = "Target Support Files/Pods-Simply Strong/Pods-Simply Strong.release.xcconfig"; sourceTree = "<group>"; };
 		7F3E2D1224C7C53000A389E6 /* Simply Strong.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Simply Strong.entitlements"; sourceTree = "<group>"; };
+		7F3F164C2540927300533B26 /* IAPManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = IAPManager.swift; path = "Simply Strong/Managers/IAPManager.swift"; sourceTree = SOURCE_ROOT; };
+		7F3F1651254093CC00533B26 /* SimplyStrongProducts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SimplyStrongProducts.swift; path = "Simply Strong/Managers/SimplyStrongProducts.swift"; sourceTree = SOURCE_ROOT; };
 		7F4FC3C425117686007D2C19 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingsViewController.swift; path = "Simply Strong/ViewControllers/SettingsViewController.swift"; sourceTree = SOURCE_ROOT; };
 		7F4FC3C625117AF1007D2C19 /* SettingsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingsTableViewCell.swift; path = "Simply Strong/TableViewCells/SettingsTableViewCell.swift"; sourceTree = SOURCE_ROOT; };
 		7F4FC3C925124C64007D2C19 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = Info.plist; path = "Simply Strong/Info.plist"; sourceTree = SOURCE_ROOT; };
@@ -76,6 +83,9 @@
 		7FAD5D3E252638DE00588813 /* SavedFoodsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SavedFoodsViewController.swift; path = "Simply Strong/ViewControllers/SavedFoodsViewController.swift"; sourceTree = SOURCE_ROOT; };
 		7FAD5D402526399600588813 /* NSPersistentContainer+extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSPersistentContainer+extension.swift"; path = "Simply Strong/Extensions/NSPersistentContainer+extension.swift"; sourceTree = SOURCE_ROOT; };
 		7FAD5D5625265B8300588813 /* FoodTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FoodTableViewCell.swift; path = "Simply Strong/TableViewCells/FoodTableViewCell.swift"; sourceTree = SOURCE_ROOT; };
+		7FD90AC2253A2CCE00167548 /* StrongAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StrongAlertView.swift; path = "Simply Strong/Views/StrongAlertView.swift"; sourceTree = SOURCE_ROOT; };
+		7FD90AC7253A2CFA00167548 /* StrongAlertView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = StrongAlertView.xib; path = "Simply Strong/Views/StrongAlertView.xib"; sourceTree = SOURCE_ROOT; };
+		7FD90ACF253DF1DE00167548 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		7FF0874A252661A500F56D2E /* LogButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LogButton.swift; path = "Simply Strong/Views/LogButton.swift"; sourceTree = SOURCE_ROOT; };
 		7FF0874C252661F900F56D2E /* ToastView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ToastView.swift; path = "Simply Strong/Views/ToastView.swift"; sourceTree = SOURCE_ROOT; };
 		7FF0874E2526620300F56D2E /* ToastView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ToastView.xib; path = "Simply Strong/Views/ToastView.xib"; sourceTree = SOURCE_ROOT; };
@@ -109,6 +119,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7FD90AD0253DF1DE00167548 /* StoreKit.framework in Frameworks */,
 				963F10C20C27EC00492514E2 /* Pods_Simply_Strong.framework in Frameworks */,
 				7FF087552526699200F56D2E /* CloudKit.framework in Frameworks */,
 			);
@@ -241,9 +252,11 @@
 		7F6453BF2518DEFC0097E0B0 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				7FF0874A252661A500F56D2E /* LogButton.swift */,
+				7FD90AC7253A2CFA00167548 /* StrongAlertView.xib */,
+				7FD90AC2253A2CCE00167548 /* StrongAlertView.swift */,
 				7FF0874E2526620300F56D2E /* ToastView.xib */,
 				7FF0874C252661F900F56D2E /* ToastView.swift */,
-				7FF0874A252661A500F56D2E /* LogButton.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -253,6 +266,8 @@
 			children = (
 				7FF087522526623C00F56D2E /* ParticleManager.swift */,
 				7FF087502526622300F56D2E /* SuggestionManager.swift */,
+				7F3F164C2540927300533B26 /* IAPManager.swift */,
+				7F3F1651254093CC00533B26 /* SimplyStrongProducts.swift */,
 			);
 			name = Managers;
 			path = "Simply Fit/Managers";
@@ -261,6 +276,7 @@
 		8799AF025CE7A19E6CDC4ABD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7FD90ACF253DF1DE00167548 /* StoreKit.framework */,
 				7FF087542526699200F56D2E /* CloudKit.framework */,
 				C2C69C193CB166BB7E547FF4 /* Pods_Simply_Strong.framework */,
 			);
@@ -384,6 +400,7 @@
 			files = (
 				7FF5F0A824D084DE00E4C517 /* Main.storyboard in Resources */,
 				7FF5F09624D07BF600E4C517 /* Images.xcassets in Resources */,
+				7FD90AC8253A2CFA00167548 /* StrongAlertView.xib in Resources */,
 				7FF5F0BF24D090B300E4C517 /* Podfile in Resources */,
 				7FF5F0A724D084DE00E4C517 /* LaunchScreen.storyboard in Resources */,
 				7FF0874F2526620300F56D2E /* ToastView.xib in Resources */,
@@ -462,6 +479,7 @@
 				7FF5F0B724D084F300E4C517 /* LogFoodViewController.swift in Sources */,
 				7FF087532526623C00F56D2E /* ParticleManager.swift in Sources */,
 				7FF0874B252661A500F56D2E /* LogButton.swift in Sources */,
+				7F3F1652254093CD00533B26 /* SimplyStrongProducts.swift in Sources */,
 				7FF5F0A024D084C700E4C517 /* CalorieTotalTableViewCell.swift in Sources */,
 				7FF5F0A224D084C700E4C517 /* FoodsEatenTableViewCell.swift in Sources */,
 				7FF5F09824D084A500E4C517 /* AppDelegate.swift in Sources */,
@@ -473,9 +491,11 @@
 				7FF5F09F24D084C700E4C517 /* FoodSuggestionTableViewCell.swift in Sources */,
 				7F4FC3C525117686007D2C19 /* SettingsViewController.swift in Sources */,
 				7FF5F0A124D084C700E4C517 /* WorkoutSetsTableViewCell.swift in Sources */,
+				7F3F164D2540927300533B26 /* IAPManager.swift in Sources */,
 				7FF5F0B824D084F300E4C517 /* WorkoutPickerViewController.swift in Sources */,
 				7FF087512526622300F56D2E /* SuggestionManager.swift in Sources */,
 				7FF5F0B524D084F300E4C517 /* AddSetViewController.swift in Sources */,
+				7FD90AC3253A2CCE00167548 /* StrongAlertView.swift in Sources */,
 				7FF5F0B624D084F300E4C517 /* LogFoodTabContainerViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

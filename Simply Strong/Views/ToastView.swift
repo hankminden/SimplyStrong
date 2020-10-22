@@ -8,8 +8,14 @@
 
 import UIKit
 
+protocol ToastViewDelegate {
+    func toastTouched() -> Void
+}
+
 class ToastView: UIView {
 
+    var delegate : ToastViewDelegate?
+    
     @IBOutlet private var contentView:UIView?
     // other outlets
     @IBOutlet weak var titleLabel: UILabel!
@@ -51,6 +57,19 @@ class ToastView: UIView {
         pan.minimumNumberOfTouches = 1
         self.addGestureRecognizer(pan)
         
+        let tap = UITapGestureRecognizer.init(target: self, action: #selector(handleTap(recognizer:)))
+        tap.numberOfTouchesRequired = 1
+        tap.numberOfTapsRequired = 1
+        self.addGestureRecognizer(tap)
+        
+    }
+    
+    @objc func handleTap(recognizer: UITapGestureRecognizer) {
+        if recognizer.state == .ended {
+            if self.delegate != nil {
+                self.delegate!.toastTouched()
+            }
+        }
     }
     
     @objc func handlePan(recognizer: UIPanGestureRecognizer)  {

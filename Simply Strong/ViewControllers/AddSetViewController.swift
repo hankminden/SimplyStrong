@@ -46,6 +46,8 @@ class AddSetViewController: UIViewController, UITableViewDataSource, UITableView
 
     var repCache: [String: Int] = [:]
     
+    let formatter2 = DateFormatter()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -79,6 +81,8 @@ class AddSetViewController: UIViewController, UITableViewDataSource, UITableView
         
         addSetButton.initParticleLayer(ptype: 0)
         addSetButton.isEnabled = false
+        
+        formatter2.dateFormat = "HH:mm:ss a"
         
     }
     
@@ -153,8 +157,7 @@ class AddSetViewController: UIViewController, UITableViewDataSource, UITableView
             let workoutSet = setArray[indexPath.row]
             cell.repsCount?.text =  String(format: "%d", (workoutSet as AnyObject).value(forKey: "noReps") as! Int)
             
-            let formatter2 = DateFormatter()
-            formatter2.dateFormat = "HH:mm:ss a"
+            
             let timeNow = formatter2.string(from: (workoutSet as AnyObject).value(forKey: "created") as! Date)
             
             let exercise = (workoutSet as AnyObject).value(forKeyPath: "ofExercise") as? NSManagedObject
@@ -758,11 +761,6 @@ class AddSetViewController: UIViewController, UITableViewDataSource, UITableView
                 print("Could not save. \(error), \(error.userInfo)")
             }
         }
-        
     }
-    
-    
-
-    
 }
 

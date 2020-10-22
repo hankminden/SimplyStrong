@@ -19,11 +19,11 @@ struct FoodDay {
 
 class LogFoodViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource, SuggestionManagerDelegate {
 
+    let formatter2 = DateFormatter()
     
     var needsRefresh : Bool = false
 
     weak var pvc : MainPageViewController?
-    //weak var mainVC : LogFoodTabContainerViewController?
     var selectedFood : NSManagedObject?
     var calSelected : Int = 0
     var foods : [NSManagedObject] = []
@@ -55,7 +55,7 @@ class LogFoodViewController: UIViewController, UIPickerViewDataSource, UIPickerV
     override func viewDidLoad() {
         super.viewDidLoad()
         
-       
+        formatter2.dateFormat = "HH:mm:ss a"
         
         //setup food suggestion table
         //foodSuggestionTable.alpha = 0
@@ -127,6 +127,7 @@ class LogFoodViewController: UIViewController, UIPickerViewDataSource, UIPickerV
         super.viewDidAppear(animated)
         
         if(needsRefresh){
+            
             loadFoodsEaten()
             needsRefresh = false
         }
@@ -145,6 +146,8 @@ class LogFoodViewController: UIViewController, UIPickerViewDataSource, UIPickerV
           let storyboard = UIStoryboard(name: "Main", bundle: nil)
           let savedFoodsVC = storyboard.instantiateViewController(withIdentifier: "savedFoodsVC") as! SavedFoodsViewController
       
+          savedFoodsVC.pvc = self
+        
           self.present(savedFoodsVC, animated: true) {
               
           }
@@ -319,8 +322,7 @@ class LogFoodViewController: UIViewController, UIPickerViewDataSource, UIPickerV
             let foodEaten = foodArray[indexPath.row]
             
             
-            let formatter2 = DateFormatter()
-            formatter2.dateFormat = "HH:mm:ss a"
+            
             let timeNow = formatter2.string(from: foodEaten.value(forKey: "created") as! Date)
             
             let food = foodEaten.value(forKeyPath: "ofFood") as? NSManagedObject

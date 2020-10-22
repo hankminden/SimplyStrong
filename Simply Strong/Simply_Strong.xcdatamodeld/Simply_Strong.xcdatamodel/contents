@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="16119" systemVersion="19D76" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17192" systemVersion="19H2" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Exercises" representedClassName="Exercises" syncable="YES" codeGenerationType="class">
         <attribute name="created" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="name" optional="YES" attributeType="String"/>
@@ -9,7 +9,7 @@
         <attribute name="calories" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="created" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="name" optional="YES" attributeType="String"/>
-        <relationship name="foodOfMeal" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="FoodsConsumed" inverseName="ofFood" inverseEntity="FoodsConsumed"/>
+        <relationship name="foodOfMeal" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="FoodsConsumed" inverseName="ofFood" inverseEntity="FoodsConsumed"/>
     </entity>
     <entity name="FoodsConsumed" representedClassName="FoodsConsumed" syncable="YES" codeGenerationType="class">
         <attribute name="created" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
@@ -22,8 +22,8 @@
     </entity>
     <elements>
         <element name="Exercises" positionX="-537.3515625" positionY="7.89453125" width="128" height="88"/>
-        <element name="Sets" positionX="-166.96875" positionY="125.3125" width="128" height="88"/>
         <element name="Foods" positionX="-535.5" positionY="-240.5" width="128" height="103"/>
         <element name="FoodsConsumed" positionX="-156.6015625" positionY="-74.5078125" width="128" height="73"/>
+        <element name="Sets" positionX="-166.96875" positionY="125.3125" width="128" height="88"/>
     </elements>
 </model>
