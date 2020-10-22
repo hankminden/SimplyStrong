@@ -24,12 +24,9 @@ class SuggestionManager: NSObject, UITableViewDelegate, UITableViewDataSource {
     init( withDelegate: SuggestionManagerDelegate) {
         delegate = withDelegate
         
-        
     }
     
     func searchForFood ( searchTerm: String) -> Void {
-        
-        
         
         guard let appDelegate =
                UIApplication.shared.delegate as? AppDelegate else {

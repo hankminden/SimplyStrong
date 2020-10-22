@@ -28,7 +28,7 @@ class LogFoodViewController: UIViewController, UIPickerViewDataSource, UIPickerV
     var calSelected : Int = 0
     var foods : [NSManagedObject] = []
     var foodsEaten : [NSManagedObject] = []
-    @IBOutlet var homeButton: UIButton!
+    
     
     var totalFoodDays = 0
     var organizedFoodDays: [FoodDay] = []
@@ -41,6 +41,11 @@ class LogFoodViewController: UIViewController, UIPickerViewDataSource, UIPickerV
     
     @IBOutlet var foodSuggestionHeight: NSLayoutConstraint!
     @IBOutlet var topSupportString: NSLayoutConstraint!
+    
+    @IBOutlet weak var savedFoodsButton: UIButton!
+    @IBOutlet var homeButton: UIButton!
+    @IBOutlet weak var homeButtonLabel: UILabel!
+    
     
     @IBOutlet var caloriePicker: UIPickerView!
     
@@ -93,7 +98,7 @@ class LogFoodViewController: UIViewController, UIPickerViewDataSource, UIPickerV
         //load foods eaten
         loadFoodsEaten()
 
-        
+        self.foodSuggestionHeight.constant = 0
 
         
     }
@@ -320,8 +325,6 @@ class LogFoodViewController: UIViewController, UIPickerViewDataSource, UIPickerV
             let cell = tableView.dequeueReusableCell(withIdentifier: "FoodLogCell", for: indexPath) as! FoodsEatenTableViewCell
 
             let foodEaten = foodArray[indexPath.row]
-            
-            
             
             let timeNow = formatter2.string(from: foodEaten.value(forKey: "created") as! Date)
             
@@ -647,7 +650,11 @@ class LogFoodViewController: UIViewController, UIPickerViewDataSource, UIPickerV
 
        
         UIView.animate(withDuration: 1.0, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 18.0, options: UIView.AnimationOptions(rawValue: 0), animations: {
-            //self.foodSuggestionTable.alpha = 1
+            
+            self.savedFoodsButton.alpha = 0
+            self.homeButton.alpha = 0
+            self.homeButtonLabel.alpha = 0
+            
             self.view.layoutIfNeeded()
             
         }) { (true) in
@@ -664,7 +671,11 @@ class LogFoodViewController: UIViewController, UIPickerViewDataSource, UIPickerV
         self.view.setNeedsUpdateConstraints()
     
         UIView.animate(withDuration: 1.0, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 18.0, options: UIView.AnimationOptions(rawValue: 0), animations: {
-            //self.foodSuggestionTable.alpha = 0
+            
+            self.savedFoodsButton.alpha = 1
+            self.homeButton.alpha = 1
+            self.homeButtonLabel.alpha = 1
+            
             self.view.layoutIfNeeded()
             
         }) { (true) in

@@ -60,6 +60,10 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         if UserDefaults.standard.value(forKey: "simply_strong_iap_0") != nil {
             proModePurchased =  UserDefaults.standard.value(forKey: "simply_strong_iap_0") as! Bool
         }
+        
+        #if targetEnvironment(simulator)
+            proModePurchased = true
+        #endif
      
     
     }
@@ -119,7 +123,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 3
+        return 4
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -130,6 +134,8 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         case 1:
             return 4
         case 2:
+            return 1
+        case 3:
             if proModePurchased {
                 return 1
             } else {
@@ -147,6 +153,8 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         case 1:
             return "Export to CSV"
         case 2:
+            return "Import from CSV"
+        case 3:
             return "Unlock All Pro Features"
         default:
             return ""
@@ -240,6 +248,21 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
             switch indexPath.row {
             case 0:
                 let cell = tableView.dequeueReusableCell(withIdentifier: "SettingCell", for: indexPath) as! SettingsTableViewCell
+                cell.settingLabel.text = "Import food table"
+                cell.settingImage.image = UIImage(imageLiteralResourceName: "restore")
+                if !proModePurchased {
+                    cell.settingLabel.textColor = .lightGray
+                } else {
+                    cell.settingLabel.textColor = .darkGray
+                }
+                return cell
+            default:
+                return UITableViewCell()
+            }
+        case 3:
+            switch indexPath.row {
+            case 0:
+                let cell = tableView.dequeueReusableCell(withIdentifier: "SettingCell", for: indexPath) as! SettingsTableViewCell
                 cell.settingImage.image = UIImage(imageLiteralResourceName: "purchase")
                 if proModePurchased {
                     cell.settingLabel.textColor = .lightGray
@@ -319,8 +342,18 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
             default:
                 break
             }
-            break
         case 2:
+            switch indexPath.row {
+            case 0:
+                if proModePurchased {
+                    importFromCSV()
+                } else { showPuchaseMessage() }
+                break
+            default:
+                break
+            }
+            break
+        case 3:
             switch indexPath.row {
             case 0:
                 if !proModePurchased {
@@ -336,6 +369,16 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         default:
             break
         }
+        
+    }
+    
+    func importFromCSV() {
+        
+        let importMenu = UIDocumentPickerViewController(documentTypes: ["public.comma-separated-values-text"], in: .open)
+        importMenu.delegate = self
+   
+        self.present(importMenu, animated: true, completion: nil)
+        self.pickingMode = 3
         
     }
     
@@ -482,9 +525,6 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
 
     }
     
-    
-    
-    
     public func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
         
         guard let myURL = urls.first else {
@@ -496,11 +536,8 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         switch self.pickingMode {
         case 1:
             
- 
             let backupName = "StrngBck" + dayStringFromTime()
             let backupUrl = myURL.appendingPathComponent( backupName )
-            
-
             
             let container = NSPersistentContainer(name: "Simply_Strong")
             
@@ -578,18 +615,63 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
                 }
                 
 
-            break;
+            break
+        case 3:
+            importFoodTableCSV(csvPath: myURL.path)
+            break
         default:
-            break;
+            break
         }
-
- 
-        
-
 
     }
 
-
+    func importFoodTableCSV(csvPath: String) {
+        
+        activityIndicator.startAnimating()
+        
+        do {
+            let csvImportManager = CSVImportManager()
+            let result = try csvImportManager.importFoodTableFromCSV(csvPath: csvPath)
+            
+            activityIndicator.stopAnimating()
+            
+            toastView?.titleLabel.text = "Import Success"
+            toastView?.bodyText.text = "Added \(result[0]) row(s) to Saved Food Table. Skipped \(result[1]) duplicated row(s)."
+            toastView?.showToast()
+            
+            
+        } catch CSVImportError.fileReadError {
+            
+            activityIndicator.stopAnimating()
+            toastView?.titleLabel.text = "Import Failed"
+            toastView?.bodyText.text = "File Read Error for file \(csvPath)"
+            toastView?.showToast()
+            
+        } catch CSVImportError.internalFault {
+            
+            activityIndicator.stopAnimating()
+            toastView?.titleLabel.text = "Import Failed"
+            toastView?.bodyText.text = "Internal fault encountered. Please try again and contact support if problem is not resolved."
+            toastView?.showToast()
+            
+        } catch CSVImportError.incorrectCSVFormat {
+            
+            activityIndicator.stopAnimating()
+            toastView?.titleLabel.text = "Import Failed"
+            toastView?.bodyText.text = "CSV file is incorrectly formatted, please use the Simply Strong Food Table export format"
+            toastView?.showToast()
+            
+        } catch {
+            
+            activityIndicator.stopAnimating()
+            toastView?.titleLabel.text = "Import Failed"
+            toastView?.bodyText.text = "Unknown error. Please try again and contact support if problem is not resolved."
+            toastView?.showToast()
+            
+        }
+        
+    }
+    
     func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
         print("view was cancelled")
         //dismiss(animated: true, completion: nil)

@@ -182,10 +182,10 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="W6R-9D-i1H">
-                                <rect key="frame" x="14" y="466.5" width="386" height="0.0"/>
+                                <rect key="frame" x="14" y="466.5" width="386" height="100"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" id="kFK-pk-bxe"/>
+                                    <constraint firstAttribute="height" constant="100" id="kFK-pk-bxe"/>
                                 </constraints>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="FoodSuggestionCell" id="ThO-KG-7PB" customClass="FoodSuggestionTableViewCell" customModule="Simply_Strong" customModuleProvider="target">
@@ -195,8 +195,8 @@
                                             <rect key="frame" x="0.0" y="0.0" width="386" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Foods" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="s4v-v2-Xkg">
-                                                    <rect key="frame" x="18" y="8" width="268" height="28"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Foods" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="s4v-v2-Xkg">
+                                                    <rect key="frame" x="18" y="8" width="308" height="28"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="28" id="VGa-CB-lsi"/>
                                                     </constraints>
@@ -204,8 +204,8 @@
                                                     <color key="textColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="888" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="brs-No-pGr">
-                                                    <rect key="frame" x="296" y="12" width="72" height="20"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="888" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="brs-No-pGr">
+                                                    <rect key="frame" x="336" y="12" width="32" height="20"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="20" id="Q8V-Pk-ync"/>
                                                     </constraints>
@@ -219,7 +219,7 @@
                                                 <constraint firstItem="brs-No-pGr" firstAttribute="centerY" secondItem="yxv-0d-obk" secondAttribute="centerY" id="G4m-mu-69a"/>
                                                 <constraint firstItem="brs-No-pGr" firstAttribute="leading" secondItem="s4v-v2-Xkg" secondAttribute="trailing" constant="10" id="bnT-lz-p7D"/>
                                                 <constraint firstAttribute="trailing" secondItem="brs-No-pGr" secondAttribute="trailing" constant="18" id="fdu-qt-SQX"/>
-                                                <constraint firstAttribute="trailing" secondItem="s4v-v2-Xkg" secondAttribute="trailing" constant="100" id="j2b-eu-DG4"/>
+                                                <constraint firstAttribute="trailing" secondItem="s4v-v2-Xkg" secondAttribute="trailing" constant="60" id="j2b-eu-DG4"/>
                                                 <constraint firstItem="s4v-v2-Xkg" firstAttribute="centerY" secondItem="yxv-0d-obk" secondAttribute="centerY" id="zhK-oq-Gyw"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -321,9 +321,11 @@
                         <outlet property="foodSuggestionTable" destination="W6R-9D-i1H" id="kC3-BH-vEA"/>
                         <outlet property="foodTextField" destination="Uo1-6d-zEO" id="j4p-QC-lgp"/>
                         <outlet property="homeButton" destination="tz6-Ka-NhU" id="cXH-Ab-Xh2"/>
+                        <outlet property="homeButtonLabel" destination="bUe-aS-eFQ" id="uaI-Pg-72M"/>
                         <outlet property="logFoodButton" destination="GHe-oR-Ezo" id="EQ4-eX-LoT"/>
                         <outlet property="logFoodTable" destination="bf2-DM-GU5" id="vs6-1R-NjM"/>
                         <outlet property="logViewButtonBacking" destination="OQG-hM-TRO" id="boU-FZ-pnO"/>
+                        <outlet property="savedFoodsButton" destination="apk-ew-7Sr" id="LcQ-HA-fkZ"/>
                         <outlet property="topSupportString" destination="tda-EF-UK9" id="yqe-xl-xZI"/>
                     </connections>
                 </viewController>

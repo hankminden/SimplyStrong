@@ -20,10 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
      func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
          // Override point for customization after application launch.
         
-        print("Documents Directory: ", FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).last ?? "Not Found!")
-        
-        //let tabBar = self.window?.rootViewController as! UITabBarController
-        //tabBar.selectedIndex = 1
+        preloadFoodDataIfNecessary()
         
         return true
      }
@@ -90,121 +87,39 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
+
     
-// -------------- UNUSED PARSING CSV CODE
-    
- func parseExercisesCSV (contentsOfURL: NSURL, encoding: String.Encoding, error: NSErrorPointer) -> [(name:String, detail:String, price: String)]? {
-    // Load the CSV file and parse it
-     let delimiter = ","
-     var items:[(name:String, detail:String, price: String)]?
-
-     //if let content = String(contentsOfURL: contentsOfURL, encoding: encoding, error: error) {
-     if let content = try? String(contentsOf: contentsOfURL as URL, encoding: encoding) {
-         items = []
-         let lines:[String] = content.components(separatedBy: NSCharacterSet.newlines) as [String]
-
-         for line in lines {
-             var values:[String] = []
-             if line != "" {
-                 // For a line with double quotes
-                 // we use NSScanner to perform the parsing
-                 if line.range(of: "\"") != nil {
-                     var textToScan:String = line
-                     var value:NSString?
-                     var textScanner:Scanner = Scanner(string: textToScan)
-                     while textScanner.string != "" {
-
-                         if (textScanner.string as NSString).substring(to: 1) == "\"" {
-                             textScanner.scanLocation += 1
-                             textScanner.scanUpTo("\"", into: &value)
-                             textScanner.scanLocation += 1
-                         } else {
-                             textScanner.scanUpTo(delimiter, into: &value)
-                         }
-
-                         // Store the value into the values array
-                         values.append(value! as String)
-
-                         // Retrieve the unscanned remainder of the string
-                         if textScanner.scanLocation < textScanner.string.count {
-                             textToScan = (textScanner.string as NSString).substring(from: textScanner.scanLocation + 1)
-                         } else {
-                             textToScan = ""
-                         }
-                         textScanner = Scanner(string: textToScan)
-                     }
-
-                     // For a line without double quotes, we can simply separate the string
-                     // by using the delimiter (e.g. comma)
-                 } else  {
-                     values = line.components(separatedBy: delimiter)
-                 }
-
-                 // Put the values into the tuple and add it to the items array
-                 let item = (name: values[0], detail: values[1], price: values[2])
-                 items?.append(item)
-             }
-         }
-     }
-
-     return items
- }
-    
-    func preloadDataForExercises () {
-        // Retrieve data from the source file
-        if let contentsOfURL = Bundle.main.url(forResource: "menudata", withExtension: "csv") {
+    func preloadFoodDataIfNecessary() {
+        
+        let managedObjectContext = self.persistentContainer.viewContext
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Foods")
+        
+        do {
+            let foods = try managedObjectContext.fetch(fetchRequest)
             
-            // Remove all the menu items before preloading
-            removeExerciseData()
-            
-            var error:NSError?
-            if let items = parseExercisesCSV(contentsOfURL: contentsOfURL as NSURL, encoding: String.Encoding.utf8, error: &error) {
-                // Preload the menu items
-                    let managedObjectContext = self.persistentContainer.viewContext
-                    for item in items {
-                      /*  let exercise = NSEntityDescription.insertNewObjectForEntityForName("Exercises", inManagedObjectContext: managedObjectContext)
-                        menuItem.name = item.name
-                        menuItem.detail = item.detail
-                        menuItem.price = (item.price as NSString).doubleValue
-                        
-                        managedObjectContext.save
-                    }*/
+            if foods.count == 0 {
+                
+                //food table is empty, populate it with default values
+                let csvImporter = CSVImportManager()
+                guard let defaultFoodCSVURL = Bundle.main.url(forResource: "FoodDataStandard", withExtension: "csv") else {
+                    return
+                }
+                
+                do {
+                    try csvImporter.importFoodTableFromCSV(csvPath: defaultFoodCSVURL.path)
+                    
+                } catch  {
+                    print("Could not load default food CSV")
+                }
                 
             }
-        }
+            
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+          }
+        
+        
     }
-    }
-    
-    func removeExerciseData () {
-         // Remove the existing items
-         let managedObjectContext = self.persistentContainer.viewContext
-         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Exercises")
-             
-         do {
-           let exercises = try managedObjectContext.fetch(fetchRequest)
-             
-             for exercise in exercises {
-                 managedObjectContext.delete(exercise as! NSManagedObject)
-                 do {
-                     try managedObjectContext.save()
-                     
-                     
-                 } catch let error as NSError {
-                   print("Could not delete. \(error), \(error.userInfo)")
-                 }
-                 
-             }
-             
-         } catch let error as NSError {
-           print("Could not fetch. \(error), \(error.userInfo)")
-         }
-    
-             
-             
-         
-     }
-    
-    // -------------- UNUSED PARSING CSV CODE  
 
 }
 

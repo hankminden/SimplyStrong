@@ -16,6 +16,8 @@
 		7FAD5D3F252638DE00588813 /* SavedFoodsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FAD5D3E252638DE00588813 /* SavedFoodsViewController.swift */; };
 		7FAD5D412526399600588813 /* NSPersistentContainer+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FAD5D402526399600588813 /* NSPersistentContainer+extension.swift */; };
 		7FAD5D5725265B8300588813 /* FoodTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FAD5D5625265B8300588813 /* FoodTableViewCell.swift */; };
+		7FB35CD925423A0C008EDBFE /* FoodDataStandard.csv in Resources */ = {isa = PBXBuildFile; fileRef = 7FB35CD825423A0C008EDBFE /* FoodDataStandard.csv */; };
+		7FB35CDE25423D07008EDBFE /* CSVImportManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB35CDD25423D07008EDBFE /* CSVImportManager.swift */; };
 		7FD90AC3253A2CCE00167548 /* StrongAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FD90AC2253A2CCE00167548 /* StrongAlertView.swift */; };
 		7FD90AC8253A2CFA00167548 /* StrongAlertView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7FD90AC7253A2CFA00167548 /* StrongAlertView.xib */; };
 		7FD90AD0253DF1DE00167548 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FD90ACF253DF1DE00167548 /* StoreKit.framework */; };
@@ -83,6 +85,8 @@
 		7FAD5D3E252638DE00588813 /* SavedFoodsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SavedFoodsViewController.swift; path = "Simply Strong/ViewControllers/SavedFoodsViewController.swift"; sourceTree = SOURCE_ROOT; };
 		7FAD5D402526399600588813 /* NSPersistentContainer+extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSPersistentContainer+extension.swift"; path = "Simply Strong/Extensions/NSPersistentContainer+extension.swift"; sourceTree = SOURCE_ROOT; };
 		7FAD5D5625265B8300588813 /* FoodTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FoodTableViewCell.swift; path = "Simply Strong/TableViewCells/FoodTableViewCell.swift"; sourceTree = SOURCE_ROOT; };
+		7FB35CD825423A0C008EDBFE /* FoodDataStandard.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = FoodDataStandard.csv; sourceTree = "<group>"; };
+		7FB35CDD25423D07008EDBFE /* CSVImportManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CSVImportManager.swift; path = "Simply Strong/Managers/CSVImportManager.swift"; sourceTree = SOURCE_ROOT; };
 		7FD90AC2253A2CCE00167548 /* StrongAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StrongAlertView.swift; path = "Simply Strong/Views/StrongAlertView.swift"; sourceTree = SOURCE_ROOT; };
 		7FD90AC7253A2CFA00167548 /* StrongAlertView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = StrongAlertView.xib; path = "Simply Strong/Views/StrongAlertView.xib"; sourceTree = SOURCE_ROOT; };
 		7FD90ACF253DF1DE00167548 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
@@ -221,6 +225,7 @@
 				7FF5F09724D084A500E4C517 /* AppDelegate.swift */,
 				7FF5F09524D07BF600E4C517 /* Images.xcassets */,
 				7F3E2D1224C7C53000A389E6 /* Simply Strong.entitlements */,
+				7FB35CD7254239F1008EDBFE /* DefaultTables */,
 				7F4FC3CB25128ABE007D2C19 /* Extensions */,
 				7F3E2D0E24C798E000A389E6 /* TableViewCells */,
 				7F3E2D0D24C798C700A389E6 /* Storyboards */,
@@ -264,14 +269,23 @@
 		7FAD5D4925263A6600588813 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
-				7FF087522526623C00F56D2E /* ParticleManager.swift */,
-				7FF087502526622300F56D2E /* SuggestionManager.swift */,
+				7FB35CDD25423D07008EDBFE /* CSVImportManager.swift */,
 				7F3F164C2540927300533B26 /* IAPManager.swift */,
+				7FF087522526623C00F56D2E /* ParticleManager.swift */,
 				7F3F1651254093CC00533B26 /* SimplyStrongProducts.swift */,
+				7FF087502526622300F56D2E /* SuggestionManager.swift */,
 			);
 			name = Managers;
 			path = "Simply Fit/Managers";
 			sourceTree = SOURCE_ROOT;
+		};
+		7FB35CD7254239F1008EDBFE /* DefaultTables */ = {
+			isa = PBXGroup;
+			children = (
+				7FB35CD825423A0C008EDBFE /* FoodDataStandard.csv */,
+			);
+			path = DefaultTables;
+			sourceTree = "<group>";
 		};
 		8799AF025CE7A19E6CDC4ABD /* Frameworks */ = {
 			isa = PBXGroup;
@@ -404,6 +418,7 @@
 				7FF5F0BF24D090B300E4C517 /* Podfile in Resources */,
 				7FF5F0A724D084DE00E4C517 /* LaunchScreen.storyboard in Resources */,
 				7FF0874F2526620300F56D2E /* ToastView.xib in Resources */,
+				7FB35CD925423A0C008EDBFE /* FoodDataStandard.csv in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -477,6 +492,7 @@
 				7FAD5D5725265B8300588813 /* FoodTableViewCell.swift in Sources */,
 				7FAD5D412526399600588813 /* NSPersistentContainer+extension.swift in Sources */,
 				7FF5F0B724D084F300E4C517 /* LogFoodViewController.swift in Sources */,
+				7FB35CDE25423D07008EDBFE /* CSVImportManager.swift in Sources */,
 				7FF087532526623C00F56D2E /* ParticleManager.swift in Sources */,
 				7FF0874B252661A500F56D2E /* LogButton.swift in Sources */,
 				7F3F1652254093CD00533B26 /* SimplyStrongProducts.swift in Sources */,
