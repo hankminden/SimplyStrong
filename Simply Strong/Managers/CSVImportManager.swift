@@ -18,6 +18,99 @@ enum CSVImportError: Error {
 
 class CSVImportManager {
     
+    func importExerciseTableFromCSV(csvPath: String) throws -> [Int] {
+        
+        var processedRows = 0
+        var duplicateRows = 0
+        var failedRows = 0
+        
+        guard let appDelegate =
+            UIApplication.shared.delegate as? AppDelegate else {
+            throw CSVImportError.internalFault
+         
+        }
+                       
+        let managedContext = appDelegate.persistentContainer.viewContext
+        
+        do {
+            var contents = try String(contentsOfFile: csvPath, encoding: .utf8)
+            contents = cleanRows(file: contents)
+            var csvArray = csv(data: contents)
+            
+            if csvArray.count > 0 {
+                
+                let headerRow = csvArray[0]
+                if headerRow[0] != "Exercise Name" {
+                 
+                    throw CSVImportError.incorrectCSVFormat
+                   
+                    
+                } else {
+                     
+                    for i in 1 ... csvArray.count - 1 {
+                        
+                        var exerciseName: String? = nil
+                        
+                        let row = csvArray[i]
+                        if row.count > 0 {
+                            exerciseName = String(row[0])
+                        } else {
+                            failedRows += 1
+                            continue
+                        }
+                     
+                        
+                        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Exercises" )
+                        fetchRequest.predicate = NSPredicate(format: "name == %@", exerciseName!)
+                        
+                        do {
+                            let foods = try managedContext.fetch(fetchRequest)
+                            
+                            if foods.count > 0 {
+                              //we found a food with matching name, mark as duplicate and continue looping
+                              duplicateRows += 1
+                            } else {
+                                
+                                //go ahead and insert this food into the food table
+                                let entity = NSEntityDescription.entity(forEntityName: "Exercises", in: managedContext)!
+                                let newexercise = NSManagedObject(entity: entity, insertInto: managedContext)
+                                
+                            
+                                newexercise.setValue(NSDate(), forKeyPath: "created")
+                                newexercise.setValue(exerciseName, forKeyPath: "name")
+                                
+                                do {
+                                    try managedContext.save()
+                                    processedRows += 1
+                                } catch  {
+                                    failedRows += 1
+                                }
+                                
+                            }
+                            
+                            
+                        } catch  {
+                            failedRows += 1
+                        }
+                        
+                        
+                    }
+                    
+                    
+                    
+                    
+                }
+                
+            }
+            
+        } catch  {
+            throw CSVImportError.fileReadError
+        }
+        
+        return [processedRows,duplicateRows,failedRows]
+        
+    }
+    
     func importFoodTableFromCSV(csvPath: String) throws -> [Int] {
         
         var processedRows = 0

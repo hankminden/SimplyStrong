@@ -97,6 +97,17 @@ class AddSetViewController: UIViewController, UITableViewDataSource, UITableView
         
     }
     
+    @IBAction func savedExercisesTouched(_ sender: Any) {
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let savedExercisesVC = storyboard.instantiateViewController(withIdentifier: "savedExercisesVC") as! SavedExercisesViewController
+    
+        savedExercisesVC.pvc = self
+      
+        self.present(savedExercisesVC, animated: true) {
+            
+        }
+    }
     //======================================
     //===  table view delegate methods =====
     //======================================

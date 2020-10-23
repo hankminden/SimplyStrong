@@ -26,7 +26,7 @@ class SavedFoodsViewController: UIViewController, UITableViewDelegate, UITableVi
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        formatter2.dateFormat = "HH:mm:ss a"
+        formatter2.dateFormat = "dd-MMM-yyyy"
 
         savedFoodsTable.layer.cornerRadius = 18
         savedFoodsTable.layer.borderWidth = 3
@@ -170,6 +170,18 @@ class SavedFoodsViewController: UIViewController, UITableViewDelegate, UITableVi
             
         }
         
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        guard let header = view as? UITableViewHeaderFooterView else { return }
+        header.textLabel?.textColor = UIColor(red: 105.0/255.0, green: 105.0/255.0, blue: 105.0/255.0, alpha: 1.0)
+        header.textLabel?.font = UIFont(name: "Futura-Bold", size: 16)
+        header.textLabel?.frame = header.frame
+        header.textLabel?.textAlignment = .center
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return "Calories - Name - Created"
     }
     
     //=============================================

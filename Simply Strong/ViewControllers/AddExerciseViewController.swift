@@ -40,6 +40,7 @@ class AddExerciseViewController: UIViewController, UITextFieldDelegate {
         let exercise = NSManagedObject(entity: entity, insertInto: managedContext)
         
         exercise.setValue(named, forKeyPath: "Name")
+        exercise.setValue(Date(), forKeyPath: "created")
         
         do {
             try managedContext.save()

@@ -38,7 +38,7 @@
                                                     <color key="textColor" red="0.41171678900000003" green="0.41179227829999998" blue="0.41171199079999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Carrots" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="2JA-sD-yOr">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Carrots" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="2JA-sD-yOr">
                                                     <rect key="frame" x="70" y="7" width="227" height="30"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="z87-gB-COz"/>
@@ -353,7 +353,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="386" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Saved Food" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="tXd-yF-a3M">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Saved Food" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="tXd-yF-a3M">
                                                     <rect key="frame" x="70" y="7" width="208" height="30"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="5SZ-PL-vl0"/>
@@ -411,7 +411,7 @@
                                 <color key="textColor" systemColor="systemGray2Color"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Swipe cells to the left to delete Foods" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="3R0-kz-f9j">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Swipe cells to the left to delete foods" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="3R0-kz-f9j">
                                 <rect key="frame" x="14" y="86" width="386" height="28"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="28" id="p3g-eD-YAl"/>
@@ -918,12 +918,27 @@
                                 <color key="textColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YB6-gh-dnJ">
+                                <rect key="frame" x="260" y="48" width="140" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="AHv-rI-4qY"/>
+                                    <constraint firstAttribute="width" constant="140" id="CDX-aZ-Yvf"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="18"/>
+                                <state key="normal" title="Saved Exercises">
+                                    <color key="titleColor" red="0.32893285160000002" green="0.78125315900000003" blue="0.98977404830000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="savedExercisesTouched:" destination="BYZ-38-t0r" eventType="touchUpInside" id="O96-hH-ZAM"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="yug-Df-u26" firstAttribute="leading" secondItem="4Op-5w-fbj" secondAttribute="trailing" constant="28" id="0tS-q4-xHd"/>
                             <constraint firstItem="yug-Df-u26" firstAttribute="width" secondItem="4Op-5w-fbj" secondAttribute="height" id="2jd-bf-yos"/>
+                            <constraint firstItem="YB6-gh-dnJ" firstAttribute="trailing" secondItem="u6t-gF-abx" secondAttribute="trailing" id="4Wx-3N-ic6"/>
                             <constraint firstItem="u6t-gF-abx" firstAttribute="top" secondItem="2YZ-Kw-wSG" secondAttribute="bottom" constant="18" id="6rh-17-nAM"/>
                             <constraint firstItem="u6t-gF-abx" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="40" id="JXR-fr-ZK5"/>
                             <constraint firstItem="4Op-5w-fbj" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="Jxw-H7-MYm"/>
@@ -943,6 +958,7 @@
                             <constraint firstItem="4Op-5w-fbj" firstAttribute="leading" secondItem="KWU-09-IS3" secondAttribute="trailing" constant="28" id="hpr-m0-a0b"/>
                             <constraint firstItem="4Op-5w-fbj" firstAttribute="top" secondItem="u6t-gF-abx" secondAttribute="bottom" constant="18" id="jLi-Rv-RrF"/>
                             <constraint firstItem="KWU-09-IS3" firstAttribute="width" secondItem="4Op-5w-fbj" secondAttribute="height" id="jbh-71-ksB"/>
+                            <constraint firstItem="YB6-gh-dnJ" firstAttribute="centerY" secondItem="C9U-1a-FvV" secondAttribute="centerY" id="kAF-KS-LOt"/>
                             <constraint firstItem="nJj-mJ-psS" firstAttribute="centerY" secondItem="en5-cz-CQP" secondAttribute="centerY" id="kSh-Ed-eQG"/>
                             <constraint firstItem="C9U-1a-FvV" firstAttribute="leading" secondItem="ikg-om-J04" secondAttribute="leading" constant="38" id="nKO-R0-8GT"/>
                             <constraint firstItem="u6t-gF-abx" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="p4H-bC-4us"/>
@@ -1050,7 +1066,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0Ch-a0-wgf" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="957" y="285"/>
+            <point key="canvasLocation" x="1661" y="285"/>
         </scene>
         <!--Workout Picker View Controller-->
         <scene sceneID="N6e-OJ-QSF">
@@ -1095,6 +1111,115 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4N3-N5-bYD" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="943" y="285"/>
+        </scene>
+        <!--Saved Exercises View Controller-->
+        <scene sceneID="lNk-1U-3Av">
+            <objects>
+                <viewController storyboardIdentifier="savedExercisesVC" id="kQR-OP-AD7" customClass="SavedExercisesViewController" customModule="Simply_Strong" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="t1D-hC-uy3">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Jsf-qZ-blN">
+                                <rect key="frame" x="14" y="117" width="386" height="731"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="FoodsCell" rowHeight="44" id="mpH-t3-NC0" customClass="FoodTableViewCell" customModule="Simply_Strong" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="386" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="mpH-t3-NC0" id="dm1-p4-sEX">
+                                            <rect key="frame" x="0.0" y="0.0" width="386" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Saved Exercise" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="ohL-Rq-8xS">
+                                                    <rect key="frame" x="70" y="7" width="208" height="30"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="30" id="jcp-SZ-827"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="14"/>
+                                                    <color key="textColor" red="0.41171678900000003" green="0.41179227829999998" blue="0.41171199079999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Jun 02, 1984" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="wWY-m6-kPF">
+                                                    <rect key="frame" x="288" y="7" width="88" height="30"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="88" id="Zdv-G4-ymR"/>
+                                                        <constraint firstAttribute="height" constant="30" id="mwa-B2-hct"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="12"/>
+                                                    <color key="textColor" red="0.41171678900000003" green="0.41179227829999998" blue="0.41171199079999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="88" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="Gcz-a2-r5E">
+                                                    <rect key="frame" x="10" y="7" width="50" height="30"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="50" id="t6j-C1-7md"/>
+                                                        <constraint firstAttribute="height" constant="30" id="zXB-ES-pUP"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="14"/>
+                                                    <color key="textColor" red="0.41171678900000003" green="0.41179227829999998" blue="0.41171199079999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="ohL-Rq-8xS" firstAttribute="leading" secondItem="Gcz-a2-r5E" secondAttribute="trailing" constant="10" id="6d4-9k-iZL"/>
+                                                <constraint firstAttribute="trailing" secondItem="wWY-m6-kPF" secondAttribute="trailing" constant="10" id="HJi-Mo-Msg"/>
+                                                <constraint firstItem="Gcz-a2-r5E" firstAttribute="leading" secondItem="dm1-p4-sEX" secondAttribute="leading" constant="10" id="KOG-Uu-NAL"/>
+                                                <constraint firstItem="ohL-Rq-8xS" firstAttribute="centerY" secondItem="dm1-p4-sEX" secondAttribute="centerY" id="Scr-Nq-zsO"/>
+                                                <constraint firstItem="Gcz-a2-r5E" firstAttribute="centerY" secondItem="dm1-p4-sEX" secondAttribute="centerY" id="b4h-5H-HYv"/>
+                                                <constraint firstItem="wWY-m6-kPF" firstAttribute="centerY" secondItem="dm1-p4-sEX" secondAttribute="centerY" id="xAx-fy-N6z"/>
+                                                <constraint firstItem="wWY-m6-kPF" firstAttribute="leading" secondItem="ohL-Rq-8xS" secondAttribute="trailing" constant="10" id="zUa-8G-dxk"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="calories" destination="Gcz-a2-r5E" id="PmZ-lR-cxC"/>
+                                            <outlet property="created" destination="wWY-m6-kPF" id="p19-Wo-tR2"/>
+                                            <outlet property="foodName" destination="ohL-Rq-8xS" id="dhe-Vw-vab"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Saved Exercises" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="HvC-JE-eMP">
+                                <rect key="frame" x="117" y="47" width="180" height="48"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="180" id="twe-YT-Cj7"/>
+                                    <constraint firstAttribute="height" constant="48" id="yct-aU-ZA1"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="20"/>
+                                <color key="textColor" systemColor="systemGray2Color"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Swipe cells to the left to delete exercises" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="zCS-nv-dyK">
+                                <rect key="frame" x="14" y="86" width="386" height="28"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="28" id="fXt-47-HdO"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="11"/>
+                                <color key="textColor" red="0.41171678900000003" green="0.41179227829999998" blue="0.41171199079999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="A8F-IJ-b4P"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="HvC-JE-eMP" firstAttribute="top" secondItem="A8F-IJ-b4P" secondAttribute="top" constant="3" id="1ob-q4-1H9"/>
+                            <constraint firstItem="HvC-JE-eMP" firstAttribute="centerX" secondItem="A8F-IJ-b4P" secondAttribute="centerX" id="2A3-NQ-Uw7"/>
+                            <constraint firstItem="zCS-nv-dyK" firstAttribute="centerX" secondItem="A8F-IJ-b4P" secondAttribute="centerX" id="Hue-Zm-U9q"/>
+                            <constraint firstItem="Jsf-qZ-blN" firstAttribute="top" secondItem="HvC-JE-eMP" secondAttribute="bottom" constant="22" id="NVS-Id-G5R"/>
+                            <constraint firstItem="Jsf-qZ-blN" firstAttribute="width" secondItem="t1D-hC-uy3" secondAttribute="width" constant="-28" id="YmV-ed-Ih3"/>
+                            <constraint firstItem="Jsf-qZ-blN" firstAttribute="top" secondItem="zCS-nv-dyK" secondAttribute="bottom" constant="3" id="axw-gE-euL"/>
+                            <constraint firstItem="Jsf-qZ-blN" firstAttribute="centerX" secondItem="A8F-IJ-b4P" secondAttribute="centerX" id="bRS-tx-4Zh"/>
+                            <constraint firstItem="A8F-IJ-b4P" firstAttribute="bottom" secondItem="Jsf-qZ-blN" secondAttribute="bottom" constant="14" id="cYF-Xh-iIV"/>
+                            <constraint firstItem="zCS-nv-dyK" firstAttribute="leading" secondItem="Jsf-qZ-blN" secondAttribute="leading" id="lNh-xs-Uf3"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="savedExercisesTable" destination="Jsf-qZ-blN" id="COg-5L-YAj"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="XXq-Gw-xv4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="235" y="285"/>
         </scene>

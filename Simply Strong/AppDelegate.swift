@@ -8,6 +8,8 @@
 
 import UIKit
 import CoreData
+import AppsFlyerLib
+
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -19,6 +21,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
      func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
          // Override point for customization after application launch.
+        
+        AppsFlyerLib.shared().appsFlyerDevKey = "WWtQ5KZW6RC8VcJnJKuoFm"
+        AppsFlyerLib.shared().appleAppID = "1525933954"
+        AppsFlyerLib.shared().delegate = self
+        AppsFlyerLib.shared().isDebug = true
+        if #available(iOS 10, *) {
+            UNUserNotificationCenter.current().requestAuthorization(options: [.badge, .alert, .sound]) { _, _ in }
+            application.registerForRemoteNotifications()
+        }
         
         preloadFoodDataIfNecessary()
         
@@ -40,7 +51,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
      func applicationDidBecomeActive(_ application: UIApplication) {
          // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        
+            AppsFlyerLib.shared().start()
      }
+    
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any]) {
+            print(" user info \(userInfo)")
+            AppsFlyerLib.shared().handlePushNotification(userInfo)
+      
+    }
+    
+    // Open URI-scheme for iOS 9 and above
+    func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
+        AppsFlyerLib.shared().handleOpen(url, sourceApplication: sourceApplication, withAnnotation: annotation)
+        return true
+    }
+    // Report Push Notification attribution data for re-engagements
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+        AppsFlyerLib.shared().handleOpen(url, options: options)
+        return true
+    }
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        AppsFlyerLib.shared().handlePushNotification(userInfo)
+    }
+    // Reports app open from deep link for iOS 10 or later
+    func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
+        AppsFlyerLib.shared().continue(userActivity, restorationHandler: nil)
+        return true
+    }
 
     // MARK: - Core Data stack
 
@@ -123,3 +161,43 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 }
 
+//MARK: AppsFlyerTrackerDelegate
+extension AppDelegate: AppsFlyerLibDelegate {
+    // Handle Organic/Non-organic installation
+    func onConversionDataSuccess(_ installData: [AnyHashable: Any]) {
+        print("onConversionDataSuccess data:")
+        for (key, value) in installData {
+            print(key, ":", value)
+        }
+        if let status = installData["af_status"] as? String {
+            if (status == "Non-organic") {
+                if let sourceID = installData["media_source"],
+                   let campaign = installData["campaign"] {
+                    print("This is a Non-Organic install. Media source: \(sourceID)  Campaign: \(campaign)")
+                }
+            } else {
+                print("This is an organic install.")
+            }
+            if let is_first_launch = installData["is_first_launch"] as? Bool,
+               is_first_launch {
+                print("First Launch")
+            } else {
+                print("Not First Launch")
+            }
+        }
+    }
+    func onConversionDataFail(_ error: Error) {
+        print(error)
+    }
+    //Handle Deep Link
+    func onAppOpenAttribution(_ attributionData: [AnyHashable : Any]) {
+        //Handle Deep Link Data
+        print("onAppOpenAttribution data:")
+        for (key, value) in attributionData {
+            print(key, ":",value)
+        }
+    }
+    func onAppOpenAttributionFailure(_ error: Error) {
+        print(error)
+    }
+}

@@ -3,7 +3,7 @@
     <entity name="Exercises" representedClassName="Exercises" syncable="YES" codeGenerationType="class">
         <attribute name="created" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="name" optional="YES" attributeType="String"/>
-        <relationship name="setOf" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Sets" inverseName="ofExercise" inverseEntity="Sets"/>
+        <relationship name="setOf" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Sets" inverseName="ofExercise" inverseEntity="Sets"/>
     </entity>
     <entity name="Foods" representedClassName="Foods" syncable="YES" codeGenerationType="class">
         <attribute name="calories" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>

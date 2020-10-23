@@ -132,9 +132,9 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         case 0:
             return 3
         case 1:
-            return 4
+            return 5
         case 2:
-            return 1
+            return 2
         case 3:
             if proModePurchased {
                 return 1
@@ -223,8 +223,8 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
                 return cell
             case 2:
                 let cell = tableView.dequeueReusableCell(withIdentifier: "SettingCell", for: indexPath) as! SettingsTableViewCell
-                cell.settingLabel.text = "Export exercise log"
-                cell.settingImage.image = UIImage(imageLiteralResourceName: "exportExerciseLogCSV")
+                cell.settingLabel.text = "Export exercise table"
+                cell.settingImage.image = UIImage(imageLiteralResourceName: "exportFoodsCSV")
                 if !proModePurchased {
                     cell.settingLabel.textColor = .lightGray
                 } else {
@@ -232,6 +232,16 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
                 }
                 return cell
             case 3:
+                let cell = tableView.dequeueReusableCell(withIdentifier: "SettingCell", for: indexPath) as! SettingsTableViewCell
+                cell.settingLabel.text = "Export exercise log"
+                cell.settingImage.image = UIImage(imageLiteralResourceName: "exportFoodLogCSV")
+                if !proModePurchased {
+                    cell.settingLabel.textColor = .lightGray
+                } else {
+                    cell.settingLabel.textColor = .darkGray
+                }
+                return cell
+            case 4:
                 let cell = tableView.dequeueReusableCell(withIdentifier: "SettingCell", for: indexPath) as! SettingsTableViewCell
                 cell.settingLabel.text = "Export all data"
                 cell.settingImage.image = UIImage(imageLiteralResourceName: "exportAllCSV")
@@ -249,6 +259,16 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
             case 0:
                 let cell = tableView.dequeueReusableCell(withIdentifier: "SettingCell", for: indexPath) as! SettingsTableViewCell
                 cell.settingLabel.text = "Import food table"
+                cell.settingImage.image = UIImage(imageLiteralResourceName: "restore")
+                if !proModePurchased {
+                    cell.settingLabel.textColor = .lightGray
+                } else {
+                    cell.settingLabel.textColor = .darkGray
+                }
+                return cell
+            case 1:
+                let cell = tableView.dequeueReusableCell(withIdentifier: "SettingCell", for: indexPath) as! SettingsTableViewCell
+                cell.settingLabel.text = "Import exercise table"
                 cell.settingImage.image = UIImage(imageLiteralResourceName: "restore")
                 if !proModePurchased {
                     cell.settingLabel.textColor = .lightGray
@@ -329,14 +349,20 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
                 break
             case 2:
                 if proModePurchased {
-                    backupToCSV(filename: "ExerciseLog", csvType: 2)
+                    backupToCSV(filename: "ExerciseTable", csvType: 2)
                 } else { showPuchaseMessage() }
                 break
             case 3:
                 if proModePurchased {
+                    backupToCSV(filename: "ExerciseLog", csvType: 3)
+                } else { showPuchaseMessage() }
+                break
+            case 4:
+                if proModePurchased {
                     backupToCSV(filename: "FoodTable", csvType: 0)
                     backupToCSV(filename: "FoodLog", csvType: 1)
-                    backupToCSV(filename: "ExerciseLog", csvType: 3)
+                    backupToCSV(filename: "ExerciseTable", csvType: 2)
+                    backupToCSV(filename: "ExerciseLog", csvType: 4)
                 } else { showPuchaseMessage() }
                 break
             default:
@@ -346,7 +372,12 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
             switch indexPath.row {
             case 0:
                 if proModePurchased {
-                    importFromCSV()
+                    importFromFoodCSV()
+                } else { showPuchaseMessage() }
+                break
+            case 1:
+                if proModePurchased {
+                    importFromExerciseCSV()
                 } else { showPuchaseMessage() }
                 break
             default:
@@ -372,13 +403,23 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         
     }
     
-    func importFromCSV() {
+    func importFromFoodCSV() {
         
         let importMenu = UIDocumentPickerViewController(documentTypes: ["public.comma-separated-values-text"], in: .open)
         importMenu.delegate = self
    
         self.present(importMenu, animated: true, completion: nil)
         self.pickingMode = 3
+        
+    }
+    
+    func importFromExerciseCSV() {
+        
+        let importMenu = UIDocumentPickerViewController(documentTypes: ["public.comma-separated-values-text"], in: .open)
+        importMenu.delegate = self
+   
+        self.present(importMenu, animated: true, completion: nil)
+        self.pickingMode = 4
         
     }
     
@@ -410,9 +451,12 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
             csvText = getFoodLogCSVText()
             successMessage = "Your food log was saved to SimplyStrong\\\(exportFolderName)\\\(filename).csv which can be accessed using the Files App."
         case 2:
+            csvText = getExerciseTableCSVText()
+            successMessage = "Your exercise table was saved to SimplyStrong\\\(exportFolderName)\\\(filename).csv which can be accessed using the Files App."
+        case 3:
             csvText = getExerciseLogCSVText()
             successMessage = "Your exercise log was saved to SimplyStrong\\\(exportFolderName)\\\(filename).csv which can be accessed using the Files App."
-        case 3:
+        case 4:
             csvText = getExerciseLogCSVText()
             successMessage = "All data was exported to SimplyStrong\\\(exportFolderName) which can be accessed using the Files App."
         default:
@@ -619,12 +663,62 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         case 3:
             importFoodTableCSV(csvPath: myURL.path)
             break
+        case 4:
+            importExerciseTableCSV(csvPath: myURL.path)
+            break
         default:
             break
         }
 
     }
 
+    func importExerciseTableCSV(csvPath: String) {
+        
+        activityIndicator.startAnimating()
+        
+        do {
+            let csvImportManager = CSVImportManager()
+            let result = try csvImportManager.importExerciseTableFromCSV(csvPath: csvPath)
+            
+            activityIndicator.stopAnimating()
+            
+            toastView?.titleLabel.text = "Import Success"
+            toastView?.bodyText.text = "Added \(result[0]) row(s) to Saved Exercise Table. Skipped \(result[1]) duplicated row(s)."
+            toastView?.showToast()
+            
+            
+        } catch CSVImportError.fileReadError {
+            
+            activityIndicator.stopAnimating()
+            toastView?.titleLabel.text = "Import Failed"
+            toastView?.bodyText.text = "File Read Error for file \(csvPath)"
+            toastView?.showToast()
+            
+        } catch CSVImportError.internalFault {
+            
+            activityIndicator.stopAnimating()
+            toastView?.titleLabel.text = "Import Failed"
+            toastView?.bodyText.text = "Internal fault encountered. Please try again and contact support if problem is not resolved."
+            toastView?.showToast()
+            
+        } catch CSVImportError.incorrectCSVFormat {
+            
+            activityIndicator.stopAnimating()
+            toastView?.titleLabel.text = "Import Failed"
+            toastView?.bodyText.text = "CSV file is incorrectly formatted, please use the Simply Strong Food Table export format"
+            toastView?.showToast()
+            
+        } catch {
+            
+            activityIndicator.stopAnimating()
+            toastView?.titleLabel.text = "Import Failed"
+            toastView?.bodyText.text = "Unknown error. Please try again and contact support if problem is not resolved."
+            toastView?.showToast()
+            
+        }
+        
+    }
+    
     func importFoodTableCSV(csvPath: String) {
         
         activityIndicator.startAnimating()
@@ -734,6 +828,52 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
              print("Could not fetch. \(error), \(error.userInfo)")
             return nil
          }
+        
+    }
+    
+    func getExerciseTableCSVText() -> String? {
+        
+        guard let appDelegate =
+            UIApplication.shared.delegate as? AppDelegate else {
+            return nil
+        }
+                       
+        let managedContext = appDelegate.persistentContainer.viewContext
+        
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Exercises" )
+        let sort = NSSortDescriptor(key: "name", ascending: true)
+        fetchRequest.sortDescriptors = [sort]
+        
+        do {
+            
+           let exercises = try managedContext.fetch(fetchRequest)
+            
+           var csvText = "Exercise Name,Date Created\n"
+           
+           let formatter = DateFormatter()
+           formatter.dateFormat = "EEEE MMM d yyyy HH:mm:ss a"
+           
+           for exercise in exercises {
+               
+                let name = exercise.value(forKey: "name") as! String
+               
+                let nameStripped = name.replacingOccurrences(of: ",", with: "")
+               
+                let created = (exercise.value(forKey: "created") as? Date) ?? Date()
+                let createdString = formatter.string(from: created)
+               
+                let newLine = "\(nameStripped),\(createdString)\n"
+                csvText.append(newLine)
+               
+           }
+           
+           return csvText
+         
+            
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+           return nil
+        }
         
     }
     

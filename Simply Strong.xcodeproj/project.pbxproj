@@ -18,6 +18,8 @@
 		7FAD5D5725265B8300588813 /* FoodTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FAD5D5625265B8300588813 /* FoodTableViewCell.swift */; };
 		7FB35CD925423A0C008EDBFE /* FoodDataStandard.csv in Resources */ = {isa = PBXBuildFile; fileRef = 7FB35CD825423A0C008EDBFE /* FoodDataStandard.csv */; };
 		7FB35CDE25423D07008EDBFE /* CSVImportManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB35CDD25423D07008EDBFE /* CSVImportManager.swift */; };
+		7FB35CE6254310BC008EDBFE /* SavedExercisesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB35CE5254310BC008EDBFE /* SavedExercisesViewController.swift */; };
+		7FB35CEE25434035008EDBFE /* AppsFlyerLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FB35CED25434035008EDBFE /* AppsFlyerLib.framework */; };
 		7FD90AC3253A2CCE00167548 /* StrongAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FD90AC2253A2CCE00167548 /* StrongAlertView.swift */; };
 		7FD90AC8253A2CFA00167548 /* StrongAlertView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7FD90AC7253A2CFA00167548 /* StrongAlertView.xib */; };
 		7FD90AD0253DF1DE00167548 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FD90ACF253DF1DE00167548 /* StoreKit.framework */; };
@@ -87,6 +89,8 @@
 		7FAD5D5625265B8300588813 /* FoodTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FoodTableViewCell.swift; path = "Simply Strong/TableViewCells/FoodTableViewCell.swift"; sourceTree = SOURCE_ROOT; };
 		7FB35CD825423A0C008EDBFE /* FoodDataStandard.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = FoodDataStandard.csv; sourceTree = "<group>"; };
 		7FB35CDD25423D07008EDBFE /* CSVImportManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CSVImportManager.swift; path = "Simply Strong/Managers/CSVImportManager.swift"; sourceTree = SOURCE_ROOT; };
+		7FB35CE5254310BC008EDBFE /* SavedExercisesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SavedExercisesViewController.swift; path = "Simply Strong/ViewControllers/SavedExercisesViewController.swift"; sourceTree = SOURCE_ROOT; };
+		7FB35CED25434035008EDBFE /* AppsFlyerLib.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AppsFlyerLib.framework; sourceTree = "<group>"; };
 		7FD90AC2253A2CCE00167548 /* StrongAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StrongAlertView.swift; path = "Simply Strong/Views/StrongAlertView.swift"; sourceTree = SOURCE_ROOT; };
 		7FD90AC7253A2CFA00167548 /* StrongAlertView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = StrongAlertView.xib; path = "Simply Strong/Views/StrongAlertView.xib"; sourceTree = SOURCE_ROOT; };
 		7FD90ACF253DF1DE00167548 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
@@ -126,6 +130,7 @@
 				7FD90AD0253DF1DE00167548 /* StoreKit.framework in Frameworks */,
 				963F10C20C27EC00492514E2 /* Pods_Simply_Strong.framework in Frameworks */,
 				7FF087552526699200F56D2E /* CloudKit.framework in Frameworks */,
+				7FB35CEE25434035008EDBFE /* AppsFlyerLib.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -157,6 +162,7 @@
 				7FF5F0AF24D084F200E4C517 /* LogFoodViewController.swift */,
 				7FF5F0AA24D084F200E4C517 /* MainPageViewController.swift */,
 				7F4FC3C425117686007D2C19 /* SettingsViewController.swift */,
+				7FB35CE5254310BC008EDBFE /* SavedExercisesViewController.swift */,
 				7FAD5D3E252638DE00588813 /* SavedFoodsViewController.swift */,
 				7FF5F0B024D084F200E4C517 /* WorkoutPickerViewController.swift */,
 			);
@@ -290,6 +296,7 @@
 		8799AF025CE7A19E6CDC4ABD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7FB35CED25434035008EDBFE /* AppsFlyerLib.framework */,
 				7FD90ACF253DF1DE00167548 /* StoreKit.framework */,
 				7FF087542526699200F56D2E /* CloudKit.framework */,
 				C2C69C193CB166BB7E547FF4 /* Pods_Simply_Strong.framework */,
@@ -501,6 +508,7 @@
 				7FF5F09824D084A500E4C517 /* AppDelegate.swift in Sources */,
 				7FF5F0C324D0A59500E4C517 /* Simply_Strong.xcdatamodel in Sources */,
 				7FF5F0B424D084F300E4C517 /* AddExerciseViewController.swift in Sources */,
+				7FB35CE6254310BC008EDBFE /* SavedExercisesViewController.swift in Sources */,
 				7FF5F09E24D084C700E4C517 /* WorkoutTotalTableViewCell.swift in Sources */,
 				7FF0874D252661F900F56D2E /* ToastView.swift in Sources */,
 				7FF5F0B124D084F300E4C517 /* HomeViewController.swift in Sources */,
@@ -690,6 +698,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_TEAM = 9K4JT24X2J;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = "Simply Strong/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -714,6 +726,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_TEAM = 9K4JT24X2J;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = "Simply Strong/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
