@@ -70,18 +70,6 @@ class AddSetViewController: UIViewController, UITableViewDataSource, UITableView
         tableView.layer.borderWidth = 3
         tableView.layer.borderColor = borderGray.cgColor
         
-        addSetButtonBacking.layer.cornerRadius = 18
-        addSetButtonBacking.clipsToBounds = true
-        
-        let gradientLayer = CAGradientLayer()
-        gradientLayer.frame = addSetButtonBacking.bounds
-        gradientLayer.colors = [UIColor.init(red: 0/255, green: 87/255, blue: 255/255, alpha: 1).cgColor,
-                                UIColor.init(red: 84/255, green: 199/255, blue: 252/255, alpha: 1).cgColor]
-        addSetButtonBacking.layer.insertSublayer(gradientLayer, at: 0)
-        
-        addSetButton.initParticleLayer(ptype: 0)
-        addSetButton.isEnabled = false
-        
         formatter2.dateFormat = "HH:mm:ss a"
         
     }
@@ -95,7 +83,19 @@ class AddSetViewController: UIViewController, UITableViewDataSource, UITableView
             needsRefresh = false
         }
         
+        
+        addSetButtonBacking.layer.cornerRadius = 18
+        addSetButtonBacking.clipsToBounds = true
+        
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.frame = addSetButtonBacking.bounds
+        gradientLayer.colors = [UIColor.init(red: 0/255, green: 87/255, blue: 255/255, alpha: 1).cgColor,
+                                UIColor.init(red: 84/255, green: 199/255, blue: 252/255, alpha: 1).cgColor]
+        addSetButtonBacking.layer.insertSublayer(gradientLayer, at: 0)
+        addSetButton.initParticleLayer(ptype: 0)
+        addSetButton.isEnabled = false
     }
+
     
     @IBAction func savedExercisesTouched(_ sender: Any) {
         

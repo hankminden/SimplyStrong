@@ -225,8 +225,11 @@ class HomeViewController: UIViewController, ChartViewDelegate {
         calendar.timeZone = NSTimeZone.local
 
         //get start of day 7 days ago
-        let today = calendar.startOfDay(for: Date())
-        let dateFrom = calendar.date(byAdding: .day, value: -7, to: today)
+        let today = calendar.startOfDay(for: Date())  // **PROD CODE** //
+        //let dateFrom = calendar.date(byAdding: .day, value: -7, to: today) // **PROD CODE** //
+
+        let dateFrom = calendar.date(byAdding: .day, value: -120, to: today) // **TEST CODE** //
+        
         let fromPredicate = NSPredicate(format: "created >= %@",  dateFrom! as NSDate)
         
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "FoodsConsumed" )
@@ -364,7 +367,9 @@ class HomeViewController: UIViewController, ChartViewDelegate {
 
         //get start of day 7 days ago
         let today = calendar.startOfDay(for: Date())
-        let dateFrom = calendar.date(byAdding: .day, value: -7, to: today)
+        //let dateFrom = calendar.date(byAdding: .day, value: -7, to: today) // **PROD CODE** //
+        let dateFrom = calendar.date(byAdding: .day, value: -120, to: today) // **TEST CODE** //
+        
         let fromPredicate = NSPredicate(format: "created >= %@",  dateFrom! as NSDate)
         
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Sets" )
@@ -509,7 +514,9 @@ class HomeViewController: UIViewController, ChartViewDelegate {
         //loop from today to seven days ago
         for i in 0 ... 7 {
                  
-            let dateFrom = calendar.date(byAdding: .day, value: -(7-i), to: today)
+            let dateFrom = calendar.date(byAdding: .day, value: -(7-i), to: today) // **PROD CODE** //
+            
+            //let dateFrom = calendar.date(byAdding: .day, value: -(82-i), to: today) // **TEST CODE** //
             let components = calendar.dateComponents([.month, .day, .year], from: dateFrom!)
                  
             let day = components.day!
@@ -531,9 +538,18 @@ class HomeViewController: UIViewController, ChartViewDelegate {
             if foodDayLookup[key] != nil {
                      
                 let fooddayindex = foodDayLookup[key]
-                let foodday = lastWeekFoodConsumed[fooddayindex!] as FoodDay
-                let entry = BarChartDataEntry(x : Double(i), y: Double(foodday.totalDailyCalories))
-                vals.append(entry)
+                
+                var entry : BarChartDataEntry?
+                
+                if lastWeekFoodConsumed.count > (fooddayindex! + 1) {
+                    let foodday = lastWeekFoodConsumed[fooddayindex!] as FoodDay
+                    entry = BarChartDataEntry(x : Double(i), y: Double(foodday.totalDailyCalories))
+                } else {
+                    entry = BarChartDataEntry(x : Double(i), y: Double(0))
+                }
+                
+                
+                vals.append(entry!)
                     
             } else {
                 
@@ -569,7 +585,8 @@ class HomeViewController: UIViewController, ChartViewDelegate {
              //loop from today to seven days ago
              for i in 0 ... 7 {
                  
-                 let dateFrom = calendar.date(byAdding: .day, value: -(7-i), to: today)
+                 let dateFrom = calendar.date(byAdding: .day, value: -(7-i), to: today)  // **PROD CODE** //
+                 //let dateFrom = calendar.date(byAdding: .day, value: -(82-i), to: today)  // **TEST CODE** //
                  let components = calendar.dateComponents([.month, .day, .year], from: dateFrom!)
                  
                  

@@ -47,7 +47,9 @@ class ToastView: UIView {
         
         toastContainer.clipsToBounds = true
         let gradientLayer = CAGradientLayer()
-        gradientLayer.frame = toastContainer.bounds
+        
+        
+        gradientLayer.frame = content.bounds
         gradientLayer.colors = [UIColor.init(red: 0/255, green: 87/255, blue: 255/255, alpha: 1).cgColor,
                                 UIColor.init(red: 84/255, green: 199/255, blue: 252/255, alpha: 1).cgColor]
         toastContainer.layer.insertSublayer(gradientLayer, at: 0)

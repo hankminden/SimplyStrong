@@ -80,16 +80,7 @@ class LogFoodViewController: UIViewController, UIPickerViewDataSource, UIPickerV
         foodTextField.layer.borderWidth = 3
         foodTextField.layer.borderColor = borderGray.cgColor
         
-        logViewButtonBacking.layer.cornerRadius = 18
-        logViewButtonBacking.clipsToBounds = true
-        let gradientLayer = CAGradientLayer()
-        gradientLayer.frame = logViewButtonBacking.bounds
-        gradientLayer.colors = [UIColor.init(red: 0/255, green: 87/255, blue: 255/255, alpha: 1).cgColor,
-                                UIColor.init(red: 84/255, green: 199/255, blue: 252/255, alpha: 1).cgColor]
-        logViewButtonBacking.layer.insertSublayer(gradientLayer, at: 0)
         
-        logFoodButton.initParticleLayer(ptype: 1)
-        logFoodButton.isEnabled = false
         
         logFoodTable.layer.cornerRadius = 18
         logFoodTable.layer.borderWidth = 3
@@ -137,7 +128,19 @@ class LogFoodViewController: UIViewController, UIPickerViewDataSource, UIPickerV
             needsRefresh = false
         }
         
+        logViewButtonBacking.layer.cornerRadius = 18
+        logViewButtonBacking.clipsToBounds = true
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.frame = logViewButtonBacking.bounds
+        gradientLayer.colors = [UIColor.init(red: 0/255, green: 87/255, blue: 255/255, alpha: 1).cgColor,
+                                UIColor.init(red: 84/255, green: 199/255, blue: 252/255, alpha: 1).cgColor]
+        logViewButtonBacking.layer.insertSublayer(gradientLayer, at: 0)
+        logFoodButton.initParticleLayer(ptype: 1)
+        logFoodButton.isEnabled = false
+        
     }
+    
+
     
     @IBAction func homeTouched(_ sender: Any) {
         
@@ -785,9 +788,7 @@ class LogFoodViewController: UIViewController, UIPickerViewDataSource, UIPickerV
                 let lastFoodDay = self.organizedFoodDays[lastSection]
                 let lastRowIndex = lastFoodDay.foodsEaten.count - 1
                 let indexPath = IndexPath(row: lastRowIndex, section: lastSection)
-                
-         
-                
+            
                 self.logFoodTable.scrollToRow(at: indexPath, at: .bottom, animated: true)
             }
         }

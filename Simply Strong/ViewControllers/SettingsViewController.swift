@@ -40,9 +40,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         tableView.delegate = self
         tableView.dataSource = self
         
-        toastView = ToastView.init(frame: CGRect(x: self.view.frame.origin.x, y: -80, width: self.view.frame.size.width, height: 80))
-        toastView?.delegate = self
-        self.view.addSubview(toastView!)
+        
         
         filesDestination = nil
         
@@ -66,6 +64,16 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         #endif
      
     
+    }
+
+ 
+    
+    override func viewDidAppear(_ animated: Bool) {
+        
+        toastView = ToastView.init(frame: CGRect(x: self.view.frame.origin.x, y: -80, width: self.view.frame.size.width, height: 80))
+        toastView?.delegate = self
+        self.view.addSubview(toastView!)
+        
     }
     
     func fetchProductsFromAppStore() {
@@ -99,8 +107,8 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     
     @objc func handlePurchaseFailedNotification(_ notification: Notification) {
         
-        toastView?.titleLabel.text = "Pro Mode Unlocked"
-        toastView?.bodyText.text = "You can now utilize all pro features and functionality!"
+        toastView?.titleLabel.text = "Purchase Failed"
+        toastView?.bodyText.text = "Please try again. Contact support@arcbased.com if issue persists."
         toastView?.showToast()
         
         activityIndicator.stopAnimating()

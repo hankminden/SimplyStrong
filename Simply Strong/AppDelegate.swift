@@ -25,11 +25,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         AppsFlyerLib.shared().appsFlyerDevKey = "WWtQ5KZW6RC8VcJnJKuoFm"
         AppsFlyerLib.shared().appleAppID = "1525933954"
         AppsFlyerLib.shared().delegate = self
-        AppsFlyerLib.shared().isDebug = true
-        if #available(iOS 10, *) {
+        AppsFlyerLib.shared().isDebug = false
+        
+        /*if #available(iOS 10, *) {
             UNUserNotificationCenter.current().requestAuthorization(options: [.badge, .alert, .sound]) { _, _ in }
             application.registerForRemoteNotifications()
-        }
+        }*/
         
         preloadFoodDataIfNecessary()
         
@@ -55,11 +56,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             AppsFlyerLib.shared().start()
      }
     
-    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any]) {
-            print(" user info \(userInfo)")
-            AppsFlyerLib.shared().handlePushNotification(userInfo)
-      
-    }
+
     
     // Open URI-scheme for iOS 9 and above
     func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
@@ -71,14 +68,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         AppsFlyerLib.shared().handleOpen(url, options: options)
         return true
     }
-    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-        AppsFlyerLib.shared().handlePushNotification(userInfo)
-    }
     // Reports app open from deep link for iOS 10 or later
     func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
         AppsFlyerLib.shared().continue(userActivity, restorationHandler: nil)
         return true
     }
+    
+    /*
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        AppsFlyerLib.shared().handlePushNotification(userInfo)
+    }
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any]) {
+            print(" user info \(userInfo)")
+            AppsFlyerLib.shared().handlePushNotification(userInfo)
+      
+    }*/
 
     // MARK: - Core Data stack
 

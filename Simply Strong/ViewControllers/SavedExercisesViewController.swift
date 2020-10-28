@@ -36,11 +36,17 @@ class SavedExercisesViewController: UIViewController, StrongAlertViewDelegate, U
         savedExercisesTable.delegate = self
         savedExercisesTable.dataSource = self
         
+        
+        
+        getSavedExercises()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        
         strongAlert = StrongAlertView.init(frame: CGRect(x: (self.view.frame.size.width/2)-(360/2), y:-320, width: 360, height: 320))
         strongAlert?.delegate = self
         self.view.addSubview(strongAlert!)
         
-        getSavedExercises()
     }
     
     func getSavedExercises() {

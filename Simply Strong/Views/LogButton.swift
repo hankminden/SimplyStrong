@@ -47,7 +47,7 @@ class LogButton: UIButton {
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         
-        super .touchesMoved(touches, with: event)
+        super.touchesMoved(touches, with: event)
         
         if self.isEnabled {
             for touch in touches {

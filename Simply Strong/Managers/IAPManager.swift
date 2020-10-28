@@ -7,6 +7,7 @@
 //
 
 import StoreKit
+import AppsFlyerLib
 
 public typealias ProductIdentifier = String
 public typealias ProductsRequestCompletionHandler = (_ success: Bool, _ products: [SKProduct]?) -> Void
@@ -121,6 +122,7 @@ extension IAPManager: SKPaymentTransactionObserver {
       case .purchasing:
         break
       @unknown default:
+        fail(transaction: transaction)
         break
       }
     }
@@ -129,7 +131,34 @@ extension IAPManager: SKPaymentTransactionObserver {
   private func complete(transaction: SKPaymentTransaction) {
     print("complete...")
     deliverPurchaseNotificationFor(identifier: transaction.payment.productIdentifier)
+    
+    //AppsFlyerLib.shared().useReceiptValidationSandbox = true
+    
+    AppsFlyerLib
+        .shared()
+        .validateAndLog (inAppPurchase: transaction.payment.productIdentifier,
+                         price: "4.99",
+                      currency: "USD",
+                      transactionId: transaction.transactionIdentifier,
+                additionalParameters: [:],
+                      success: {
+          guard let dictionary = $0 as? [String:Any] else { return }
+          dump(dictionary)
+        }, failure: { error, result in
+          guard let emptyInApp = result as? [String:Any],
+               let status = emptyInApp["status"] as? String,
+                 status == "in_app_arr_empty" else {
+                    // Try to handle other errors
+                     return
+                   }
+             
+          // retry with 'SKReceiptRefreshRequest' because
+          // Apple has returned an empty response
+          // <YOUR CODE HERE>
+        })
+    
     SKPaymentQueue.default().finishTransaction(transaction)
+    
   }
 
   private func restore(transaction: SKPaymentTransaction) {
