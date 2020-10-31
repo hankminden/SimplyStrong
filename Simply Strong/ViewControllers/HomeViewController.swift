@@ -226,9 +226,9 @@ class HomeViewController: UIViewController, ChartViewDelegate {
 
         //get start of day 7 days ago
         let today = calendar.startOfDay(for: Date())  // **PROD CODE** //
-        //let dateFrom = calendar.date(byAdding: .day, value: -7, to: today) // **PROD CODE** //
+        let dateFrom = calendar.date(byAdding: .day, value: -7, to: today) // **PROD CODE** //
 
-        let dateFrom = calendar.date(byAdding: .day, value: -120, to: today) // **TEST CODE** //
+        //let dateFrom = calendar.date(byAdding: .day, value: -120, to: today) // **TEST CODE** //
         
         let fromPredicate = NSPredicate(format: "created >= %@",  dateFrom! as NSDate)
         
@@ -367,8 +367,8 @@ class HomeViewController: UIViewController, ChartViewDelegate {
 
         //get start of day 7 days ago
         let today = calendar.startOfDay(for: Date())
-        //let dateFrom = calendar.date(byAdding: .day, value: -7, to: today) // **PROD CODE** //
-        let dateFrom = calendar.date(byAdding: .day, value: -120, to: today) // **TEST CODE** //
+        let dateFrom = calendar.date(byAdding: .day, value: -7, to: today) // **PROD CODE** //
+        //let dateFrom = calendar.date(byAdding: .day, value: -120, to: today) // **TEST CODE** //
         
         let fromPredicate = NSPredicate(format: "created >= %@",  dateFrom! as NSDate)
         
@@ -541,12 +541,13 @@ class HomeViewController: UIViewController, ChartViewDelegate {
                 
                 var entry : BarChartDataEntry?
                 
-                if lastWeekFoodConsumed.count > (fooddayindex! + 1) {
+                if lastWeekFoodConsumed.indices.contains(fooddayindex!) {
                     let foodday = lastWeekFoodConsumed[fooddayindex!] as FoodDay
                     entry = BarChartDataEntry(x : Double(i), y: Double(foodday.totalDailyCalories))
                 } else {
                     entry = BarChartDataEntry(x : Double(i), y: Double(0))
                 }
+                
                 
                 
                 vals.append(entry!)
